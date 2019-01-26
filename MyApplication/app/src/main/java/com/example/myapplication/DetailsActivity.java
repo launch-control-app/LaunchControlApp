@@ -10,7 +10,7 @@ import com.jjoe64.graphview.Viewport;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
-public class DetailsActivity extends AppCompatActivity implements dataListener {
+public class DetailsActivity extends AppCompatActivity {
 
     private TextView mTextView;
     GraphView graphView;
@@ -25,7 +25,6 @@ public class DetailsActivity extends AppCompatActivity implements dataListener {
 
         mTextView = (TextView) findViewById(R.id.textView);
         mTextView.setMovementMethod(new ScrollingMovementMethod());
-        BTManager.getBTConn(this);
 
         graphView = (GraphView) findViewById(R.id.graph);
 //        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
@@ -49,24 +48,24 @@ public class DetailsActivity extends AppCompatActivity implements dataListener {
 
     }
 
-    @Override
-    public void onDataRecieved(String data) {
-        mTextView.append(data + "\n");
-
-        final int scrollAmount = mTextView.getLayout().getLineTop(mTextView.getLineCount()) - mTextView.getHeight();
-        // if there is no need to scroll, scrollAmount will be <=0
-        if (scrollAmount > 0)
-            mTextView.scrollTo(0, scrollAmount);
-        else
-            mTextView.scrollTo(0, 0);
-        //mTextView.setText(data + "\n");
-
-//        graphView.addSeries(
-//                new DataPoint(counter, Integer.parseInt(data.split(" ")[0]))
+//    @Override
+//    public void onDataRecieved(String data) {
+//        mTextView.append(data + "\n");
 //
-//        }));
-
-        series.appendData(new DataPoint(counter, Integer.parseInt(data.split(" ")[0])), false, 20);
-        counter++;
-    }
+//        final int scrollAmount = mTextView.getLayout().getLineTop(mTextView.getLineCount()) - mTextView.getHeight();
+//        // if there is no need to scroll, scrollAmount will be <=0
+//        if (scrollAmount > 0)
+//            mTextView.scrollTo(0, scrollAmount);
+//        else
+//            mTextView.scrollTo(0, 0);
+//        //mTextView.setText(data + "\n");
+//
+////        graphView.addSeries(
+////                new DataPoint(counter, Integer.parseInt(data.split(" ")[0]))
+////
+////        }));
+//
+//        series.appendData(new DataPoint(counter, Integer.parseInt(data.split(" ")[0])), false, 20);
+//        counter++;
+//    }
 }

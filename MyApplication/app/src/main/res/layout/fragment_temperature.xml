@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:id="@+id/coolantTemp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="50dp"
+                android:minWidth="150dp"
+                android:minHeight="150dp"
+                android:maxHeight="500dp"
+                android:indeterminate="false"
+                android:layout_centerInParent="true"
+                android:max="100"
+                android:progress="0"
+                android:progressDrawable="@drawable/custom_progressbar_drawable"
+                android:secondaryProgress="0"
+                />
+
+            <TextView
+                android:id="@+id/txtProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/coolantTemp"
+                android:textColor="@color/dataText"
+                android:layout_centerInParent="true"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/coolantTemp"
+                android:layout_margin="0dp"
+                android:layout_alignBottom="@+id/coolantTemp"
+                android:text="Coolant Temperature"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/dataText" />
+
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/oilTemp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="50dp"
+            android:minWidth="150dp"
+            android:minHeight="150dp"
+            android:maxHeight="500dp"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
