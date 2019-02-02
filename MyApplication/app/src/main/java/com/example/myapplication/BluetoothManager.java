@@ -17,7 +17,8 @@ public class BluetoothManager implements  DeviceCallback {
     private static BluetoothManager bluetoothManager;
     private List<DeviceCallback> deviceCallbacks;
 
-    private String deviceName = "DESKTOP-B4D2HN2";
+    //private String deviceName = "DESKTOP-B4D2HN2";
+    private String deviceName = "HC-05";
 
     public static BluetoothManager getBluetoothManager(Context context)
     {
@@ -56,12 +57,18 @@ public class BluetoothManager implements  DeviceCallback {
 
     @Override
     public void onDeviceConnected(BluetoothDevice device) {
-
+        for (DeviceCallback deviceCallback : deviceCallbacks)
+        {
+            deviceCallback.onDeviceConnected(device);
+        }
     }
 
     @Override
     public void onDeviceDisconnected(BluetoothDevice device, String message) {
-
+        for (DeviceCallback deviceCallback : deviceCallbacks)
+        {
+            deviceCallback.onDeviceDisconnected(device, message);
+        }
     }
 
     @Override

@@ -35,6 +35,7 @@ public class DetailsActivity extends AppCompatActivity {
         series = new LineGraphSeries<>();
 
         graphView.addSeries(series);
+
         Viewport viewport = graphView.getViewport();
         viewport.setYAxisBoundsManual(true);
         viewport.setMinY(0);

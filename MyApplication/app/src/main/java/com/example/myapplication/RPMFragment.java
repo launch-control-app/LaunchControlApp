@@ -79,7 +79,8 @@ public class RPMFragment extends Fragment implements DeviceCallback {
             @Override
             public void run() {
                 String[] data = message.split(";");
-                String rpm = data[1];
+                //String rpm = data[1];
+                String rpm = data[0];
                 String currentTime = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
 
                 rpmTitle.setText(rpm + " RPM");

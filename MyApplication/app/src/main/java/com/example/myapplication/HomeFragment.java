@@ -43,12 +43,22 @@ public class HomeFragment extends Fragment implements DeviceCallback {
 
     @Override
     public void onDeviceConnected(BluetoothDevice device) {
-
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                rpmText.setText("onConnected");
+            }
+        });
     }
 
     @Override
     public void onDeviceDisconnected(BluetoothDevice device, String message) {
-
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                rpmText.setText("onDisconnected");
+            }
+        });
     }
 
     @Override
@@ -58,7 +68,7 @@ public class HomeFragment extends Fragment implements DeviceCallback {
             public void run() {
                 String[] data = message.split(";");
                 speedText.setText(data[0] + " KPH");
-                rpmText.setText(data[1] + " RPM");
+                rpmText.setText(data[0] + " RPM");
             }
         });
     }
