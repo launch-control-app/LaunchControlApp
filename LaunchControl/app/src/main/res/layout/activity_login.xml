@@ -5,15 +5,106 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/loginActivity_rootLayout"
+    android:background="@color/backgroundNormal"
     tools:context=".activities.LoginActivity">
 
     <TextView
+        android:id="@+id/login_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:fontFamily="@font/poppins_light"
+        android:text="Launch\nControl"
+        android:textColor="@color/primaryText"
+        android:textSize="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.18906" />
+
+    <LinearLayout
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.85">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/primaryText">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/loginActivity_email"
+                android:paddingTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:hint="Email Address"
+                android:background="@null"
+                android:textColorHint="@color/primaryText"
+                android:textColor="@color/primaryText"
+                android:inputType="text"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:background="@drawable/gradient"
+            android:layout_height="1dp"
+            android:layout_marginBottom="20dp"></View>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/primaryText">
+            <android.support.design.widget.TextInputEditText
+                android:paddingTop="5dp"
+                android:id="@+id/loginActivity_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:hint="Password"
+                android:background="@null"
+                android:textColorHint="@color/primaryText"
+                android:textColor="@color/primaryText"
+                android:inputType="textPassword"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:background="@drawable/gradient"
+            android:layout_height="1dp"></View>
+
+        <TextView
+            android:id="@+id/loginActivity_forgot_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Forgot Password?"
+            android:textColor="@color/primaryText"
+            android:layout_gravity="right"
+            android:alpha="0.5"/>
+
+        <Button
+            android:layout_marginTop="40dp"
+            android:id="@+id/loginActivity_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/primaryText"
+            android:text="Log In"/>
+
+        <Button
+            android:layout_marginTop="20dp"
+            android:id="@+id/loginActivity_sign_up"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/primaryText"
+            android:text="Sign Up"/>
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
