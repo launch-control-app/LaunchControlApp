@@ -1,7 +1,0 @@
-<resources>
-    <string name="app_name">Launch Control 2.0</string>
-    <string name="title_home">Modified Home Again</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="title_activity_details">DetailsActivity</string>
-</resources>
