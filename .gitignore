@@ -1,0 +1,10 @@
+# Data Collector PlatformIO Workspace
+LaunchControl-DataCollector/.pio
+LaunchControl-DataCollector/.pioenvs
+LaunchControl-DataCollector/.piolibdeps
+LaunchControl-DataCollector/.vscode/.browse.c_cpp.db*
+LaunchControl-DataCollector/.vscode/c_cpp_properties.json
+LaunchControl-DataCollector/.vscode/launch.json
+LaunchControl-DataCollector/.vscode/extensions.json
+LaunchControl-DataCollector/.vscode/settings.json
+LaunchControl-DataCollector/.travis.yml
