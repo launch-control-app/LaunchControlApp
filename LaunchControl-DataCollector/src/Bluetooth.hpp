@@ -1,3 +1,8 @@
+/*
+  Creation Date: Tuesday, 29th January 2019 
+  Original Author: Christian Francisco 
+  Contents of File: Encapsulates bluetooth functions
+*/
 #ifndef BLUETOOTH_H
 #define BLUETOOTH_H
 

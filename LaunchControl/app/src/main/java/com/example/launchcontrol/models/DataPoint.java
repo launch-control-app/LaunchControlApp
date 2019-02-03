@@ -1,3 +1,9 @@
+/**
+ * Creation Date: Friday, February 1st 2019
+ * Original Author: Rohan Rao
+ * Modifications by: Akash Patel
+ * Contents of File: Model class that encapsulates a raw OBD-II string to a java object
+ */
 package com.example.launchcontrol.models;
 
 public class DataPoint {

@@ -1,3 +1,8 @@
+/**
+ * Creation Date: Friday, February 1st 2019
+ * Original Author: Rohan Rao
+ * Contents of File: Utilities class that generates pre-defined snackbars for BT reconnect requests
+ */
 package com.example.launchcontrol.utilities;
 
 import android.support.design.widget.Snackbar;

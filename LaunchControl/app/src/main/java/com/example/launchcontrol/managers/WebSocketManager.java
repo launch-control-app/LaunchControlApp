@@ -1,3 +1,8 @@
+/**
+ * Creation Date: Friday, February 1st 2019
+ * Original Author: Rohan Rao
+ * Contents of File: Used for interfacing with the web server
+ */
 package com.example.launchcontrol.managers;
 
 import com.github.nkzawa.socketio.client.IO;

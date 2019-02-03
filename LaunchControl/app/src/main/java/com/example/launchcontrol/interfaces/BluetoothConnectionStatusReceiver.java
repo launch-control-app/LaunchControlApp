@@ -1,3 +1,8 @@
+/**
+ * Creation Date: Friday, February 1st 2019
+ * Original Author: Rohan Rao
+ * Contents of File: Defines an interface to receive connection statuses via bluetooth
+ */
 package com.example.launchcontrol.interfaces;
 
 import android.bluetooth.BluetoothDevice;

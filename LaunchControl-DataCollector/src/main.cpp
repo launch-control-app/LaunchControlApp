@@ -1,3 +1,8 @@
+/*
+  Creation Date: Tuesday, 29th January 2019 
+  Original Author: Christian Francisco 
+  Contents of File: Main logic data collection
+*/
 #include <memory>
 
 #include <Arduino.h>

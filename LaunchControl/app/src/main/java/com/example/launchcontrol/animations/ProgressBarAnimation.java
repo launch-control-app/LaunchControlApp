@@ -1,3 +1,9 @@
+/**
+ * Creation Date: Saturday, February 2nd 2019
+ * Original Author: Akash Patel
+ * Modifications by: Rohan Rao
+ * Contents of File: To define an interpolated animation for the progress bar
+ */
 package com.example.launchcontrol.animations;
 
 import android.view.animation.Animation;

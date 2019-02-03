@@ -1,3 +1,8 @@
+/**
+ * Creation Date: Friday, February 1st 2019
+ * Original Author: Rohan Rao
+ * Contents of File: Used for interfacing the bluetooth connection with the teensy microcontroller
+ */
 package com.example.launchcontrol.managers;
 
 import android.bluetooth.BluetoothDevice;

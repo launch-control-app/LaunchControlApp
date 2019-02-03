@@ -1,3 +1,9 @@
+/**
+ * Creation Date: Friday, February 1st 2019
+ * Original Author: Rohan Rao
+ * Modifications by: Akash Patel
+ * Contents of File: Login form, to login an existing user (also used as a landing page)
+ */
 package com.example.launchcontrol.activities;
 
 import android.bluetooth.BluetoothDevice;

@@ -1,7 +1,14 @@
+/**
+ * Creation Date: Friday, February 1st 2019
+ * Original Author: Rohan Rao
+ * Modifications by: Akash Patel
+ * Contents of File: Dashboard screen, main page that shows all OBD-II metrics
+ */
 package com.example.launchcontrol.activities;
 
 import android.bluetooth.BluetoothDevice;
 import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.widget.ProgressBar;
 import android.widget.TextView;

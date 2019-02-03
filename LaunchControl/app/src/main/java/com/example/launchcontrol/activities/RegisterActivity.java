@@ -1,3 +1,8 @@
+/**
+ * Creation Date: Friday, February 1st 2019
+ * Original Author: Rohan Rao
+ * Contents of File: Registration form, to sign up a new user
+ */
 package com.example.launchcontrol.activities;
 
 import android.support.v7.app.AppCompatActivity;

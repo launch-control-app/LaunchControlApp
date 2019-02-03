@@ -1,3 +1,8 @@
+/*
+  Creation Date: Tuesday, 29th January 2019 
+  Original Author: Christian Francisco 
+  Contents of File: Implements bluetooth functions
+*/
 #include "Bluetooth.hpp"
 
 Bluetooth::Bluetooth(HardwareSerial &UART, PIN CMD_PIN,

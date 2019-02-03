@@ -1,3 +1,8 @@
+/**
+ * Creation Date: Friday, February 1st 2019
+ * Original Author: Rohan Rao
+ * Contents of File: Forgot password form, to submit a forgot password request
+ */
 package com.example.launchcontrol.activities;
 
 import android.support.v7.app.AppCompatActivity;
