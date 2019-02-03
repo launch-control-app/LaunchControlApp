@@ -8,34 +8,34 @@ public class DataPoint {
     private String VIN;
 
     //Engine Parameters
-    private float RPM;
-    private float calculatedEngineLoad;
-    private float engineCoolantTemperature;
-    private float absoluteEngineLoad;
-    private float engineOilTemperature;
-    private float torquePercentage;
-    private float referenceTorque;
+    private int RPM;
+    private int calculatedEngineLoad;
+    private int engineCoolantTemperature;
+    private int absoluteEngineLoad;
+    private int engineOilTemperature;
+    private int torquePercentage;
+    private int referenceTorque;
 
     //Intake/Exhaust
-    private float intakeTemperature;
-    private float intakePressure;
-    private float flowPressure;
-    private float barometricPressure;
+    private int intakeTemperature;
+    private int intakePressure;
+    private int flowPressure;
+    private int barometricPressure;
 
     //Speed/Time
-    private float vehicleSpeed;
-    private float engineRunningTime;
-    private float vehicleRunningDistance;
+    private int vehicleSpeed;
+    private int engineRunningTime;
+    private int vehicleRunningDistance;
 
     //Driver
-    private float throttlePosition;
-    private float ambientTemperature;
+    private int throttlePosition;
+    private int ambientTemperature;
 
     //Electric Systems
-    private float controlModuleVoltage;
+    private int controlModuleVoltage;
 
     //Fuel
-    private float fuelLevel;
+    private int fuelLevel;
 
     public DataPoint(String message)
     {
@@ -59,94 +59,94 @@ public class DataPoint {
         //Engine Parameters
         try
         {
-            RPM = Float.parseFloat(parameters[1]);
+            RPM = Integer.parseInt(parameters[1]);
         } catch (Exception e) {}
         try
         {
-            calculatedEngineLoad =  Float.parseFloat(parameters[2]);
+            calculatedEngineLoad =  Integer.parseInt(parameters[2]);
         } catch (Exception e) {}
         try
         {
-            engineCoolantTemperature = Float.parseFloat(parameters[3]);
+            engineCoolantTemperature = Integer.parseInt(parameters[3]);
         } catch (Exception e) {}
         try
         {
-            absoluteEngineLoad = Float.parseFloat(parameters[4]);
+            absoluteEngineLoad = Integer.parseInt(parameters[4]);
         } catch (Exception e) {}
         try
         {
-            engineOilTemperature = Float.parseFloat(parameters[5]);
-        } catch (Exception e) {}
-
-        try
-        {
-            torquePercentage = Float.parseFloat(parameters[6]);
+            engineOilTemperature = Integer.parseInt(parameters[5]);
         } catch (Exception e) {}
 
         try
         {
-            referenceTorque = Float.parseFloat(parameters[7]);
+            torquePercentage = Integer.parseInt(parameters[6]);
+        } catch (Exception e) {}
+
+        try
+        {
+            referenceTorque = Integer.parseInt(parameters[7]);
         } catch (Exception e) {}
 
 
         //Intake/Exhaust
         try
         {
-            intakeTemperature = Float.parseFloat(parameters[8]);
+            intakeTemperature = Integer.parseInt(parameters[8]);
         } catch (Exception e) {}
 
         try
         {
-            intakePressure = Float.parseFloat(parameters[9]);
+            intakePressure = Integer.parseInt(parameters[9]);
         } catch (Exception e) {}
 
         try
         {
-            flowPressure = Float.parseFloat(parameters[10]);
+            flowPressure = Integer.parseInt(parameters[10]);
         } catch (Exception e) {}
 
         try
         {
-            barometricPressure = Float.parseFloat(parameters[11]);
+            barometricPressure = Integer.parseInt(parameters[11]);
         } catch (Exception e) {}
 
         //Speed/Time
         try
         {
-            vehicleSpeed = Float.parseFloat(parameters[12]);
+            vehicleSpeed = Integer.parseInt(parameters[12]);
         } catch (Exception e) {}
 
         try
         {
-            engineRunningTime = Float.parseFloat(parameters[13]);
+            engineRunningTime = Integer.parseInt(parameters[13]);
         } catch (Exception e) {}
 
         try
         {
-            vehicleRunningDistance = Float.parseFloat(parameters[14]);
+            vehicleRunningDistance = Integer.parseInt(parameters[14]);
         } catch (Exception e) {}
 
         //Driver
         try
         {
-            throttlePosition = Float.parseFloat(parameters[15]);
+            throttlePosition = Integer.parseInt(parameters[15]);
         } catch (Exception e) {}
 
         try
         {
-            ambientTemperature = Float.parseFloat(parameters[16]);
+            ambientTemperature = Integer.parseInt(parameters[16]);
         } catch (Exception e) {}
 
         //Electric Systems
         try
         {
-            controlModuleVoltage = Float.parseFloat(parameters[17]);
+            controlModuleVoltage = Integer.parseInt(parameters[17]);
         } catch (Exception e) {}
 
         //Fuel
         try
         {
-            fuelLevel = Float.parseFloat(parameters[18]);
+            fuelLevel = Integer.parseInt(parameters[18]);
         } catch (Exception e) {}
     }
 
@@ -156,77 +156,84 @@ public class DataPoint {
         return (VIN != null) ? VIN : "";
     }
 
-    public float getCalculatedEngineLoad()
+    public Integer getCalculatedEngineLoad()
     {
         return calculatedEngineLoad;
     }
 
-    public float getEngineCoolantTemperature()
+    public Integer getEngineRPM()
+    {
+        return RPM;
+    }
+
+    public Integer getEngineCoolantTemperature()
     {
         return engineCoolantTemperature;
     }
 
-    public float getAbsoluteEngineLoad()
+    public Integer getEngineOilTemperature() { return engineOilTemperature; }
+
+    public Integer getAbsoluteEngineLoad()
     {
         return absoluteEngineLoad;
     }
 
-    public float getTorquePercentage()
+    public Integer getTorquePercentage()
     {
         return torquePercentage;
     }
 
-    public float getReferenceTorque()
+    public Integer getReferenceTorque()
     {
         return referenceTorque;
     }
 
-    public float getIntakeTemperature()
+    public Integer getIntakeTemperature()
     {
         return intakeTemperature;
     }
 
-    public float getFlowPressure()
+    public Integer getFlowPressure()
     {
         return flowPressure;
     }
 
-    public float getBarometricPressure()
+    public Integer getBarometricPressure()
     {
         return barometricPressure;
     }
 
-    public float getVehicleSpeed()
+    public Integer getVehicleSpeed()
     {
         return vehicleSpeed;
     }
 
-    public float getEngineRunningTime()
+    public Integer getEngineRunningTime()
     {
         return engineRunningTime;
     }
 
-    public float getVehicleRunningDistance()
+    public Integer getVehicleRunningDistance()
     {
         return vehicleRunningDistance;
     }
 
-    public float getThrottlePosition()
+    public Integer getThrottlePosition()
     {
         return throttlePosition;
     }
 
-    public float getAmbientTemperature()
+    public Integer getAmbientTemperature()
     {
         return ambientTemperature;
     }
 
-    public float getControlModuleVoltage()
+    public Integer getControlModuleVoltage()
     {
         return controlModuleVoltage;
     }
 
-    public float getFuelLevel()
+    public Integer getFuelLevel()
     {
         return fuelLevel;
     }

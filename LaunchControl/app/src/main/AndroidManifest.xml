@@ -17,15 +17,24 @@
         <activity android:name=".activities.ForgotPasswordActivity"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".activities.DashboardActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait">
+
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+
+        </activity>
         <activity android:name=".activities.RegisterActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".activities.LoginActivity"
             android:screenOrientation="portrait">
+            <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            -->
         </activity>
     </application>
 

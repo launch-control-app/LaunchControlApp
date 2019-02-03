@@ -3,4 +3,12 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="backgroundNormal">#1F1F28</color>
+    <color name="backgroundDark">#181820</color>
+    <color name="primaryText">#FFFFFF</color>
+    <color name="secondaryText">#2E2F40</color>
+    <color name="tertiaryText">#6E709A</color>
+    <color name="highlight">#7F00FF</color>
+    <color name="gradient_start">#7F00FF</color>
+    <color name="gradient_end">#E100FF</color>
 </resources>
