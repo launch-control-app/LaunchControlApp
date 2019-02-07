@@ -2,17 +2,17 @@ import bluetooth
 import random
 import time
 
-def getString():
+# Generate a comma-seperated string of values
+def getString(counter):
     data = list()
     for i in range(19):
-        data.append(str(random.randint(0, 255)))
+        data.append(str(random.randint(75, 100)))
+    data[12] = str(counter)
     return str(",".join(data) + "\n")
 
 server_socket= bluetooth.BluetoothSocket(bluetooth.RFCOMM)
-
 server_socket.bind(("", bluetooth.PORT_ANY))
 server_socket.listen(1)
-
 
 uuid = "94f39d29-7d6d-437d-973b-fba39e49d4ee"
 
@@ -23,18 +23,24 @@ bluetooth.advertise_service(server_socket, "RaspiBtSrv",
                    profiles=[bluetooth.SERIAL_PORT_PROFILE])
 
 print("Now listening...")
+
+counter = 0
+# Outer loop - connect to client
 while True:
-    print("Now listening part 1...")
     client_socket, address = server_socket.accept()
-    print("Now listening part 2...")
+    print("Connected to client")
+
+    # Inner loop - send data to client periodically
     while True:
-        print("found connections")
         try:
-            print("got here")
-            client_socket.send(getString())
-            time.sleep(0.5)
+            str_to_send = getString(counter)
+            client_socket.send(str_to_send)
+            counter += 100
+            counter %= 200
+            print(str_to_send)
+            time.sleep(1.5)
         except:
-            print('something happend')
+            print('Client disconnected')
             client_socket.close()
             break
 

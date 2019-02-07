@@ -14,7 +14,7 @@ public class WebSocketManager {
 
     private Socket socket;
     private static WebSocketManager webSocketManager;
-    private String domainName = "http://chat.socket.io"; //TODO: this is a placeholder
+    private String domainName = "https://afternoon-mountain-12604.herokuapp.com/"; //TODO: this is a placeholder
 
     public static Socket getWebSocket()
     {
@@ -29,6 +29,7 @@ public class WebSocketManager {
         try
         {
             socket = IO.socket(domainName);
+            socket.connect();
         } catch (URISyntaxException e) {}
     }
 

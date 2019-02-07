@@ -100,7 +100,7 @@ public class BluetoothManager implements DeviceCallback {
         DataPoint dataPoint = new DataPoint(message);
         for (BluetoothDataReceiver bluetoothDataReceiver : bluetoothDataReceivers)
             bluetoothDataReceiver.onDataReceived(dataPoint);
-        webSocket.emit(dataPoint.toString()); //this happens on a different thread, so low perf overhead
+        webSocket.emit("data", dataPoint.toString()); //this happens on a different thread, so low perf overhead
     }
 
     @Override
