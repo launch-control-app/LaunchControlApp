@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class DataPoint {
 
@@ -265,10 +266,8 @@ public class DataPoint {
 
     private static String getCurrentDateTimeStamp()
     {
-        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-        Date now = new Date();
-        String strDate = sdfDate.format(now);
-        return strDate;
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.US);
+        return sdfDate.format(new Date());
     }
 
     public void setLocation(Location location)
