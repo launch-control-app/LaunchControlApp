@@ -63,9 +63,7 @@ public class ChartMaker {
 
         // Configure Legend
         Legend l = lineChart.getLegend();
-        l.setForm(Legend.LegendForm.LINE);
-        l.setTypeface(tf);
-        l.setTextColor(Color.WHITE);
+        l.setEnabled(false);
 
         //Configure X axis
         XAxis xl = lineChart.getXAxis();
