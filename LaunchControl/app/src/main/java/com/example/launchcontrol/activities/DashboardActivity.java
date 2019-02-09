@@ -34,6 +34,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 public class DashboardActivity extends AppCompatActivity implements BluetoothDataReceiver, BluetoothConnectionStatusReceiver,
@@ -159,6 +160,7 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
                                 scrollView.requestDisallowInterceptTouchEvent(true);
                             }
                         });
+                googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(DashboardActivity.this, R.raw.maps_json));
                 getLocation();
             }
         });
