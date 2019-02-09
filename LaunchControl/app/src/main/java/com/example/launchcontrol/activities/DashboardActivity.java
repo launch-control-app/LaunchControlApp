@@ -40,7 +40,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 public class DashboardActivity extends AppCompatActivity implements BluetoothDataReceiver, BluetoothConnectionStatusReceiver,
         OnMapReadyCallback {
 
-    TextView speed, rpm, runtime, runtimeUnit ,distance, fuel, oiltemp;
+    TextView speed, rpm, runtime, runtimeUnit ,distance, fuel, oiltemp,
+        calcEngineLoad, absEngineLoad, engineTorquePercentage, coolanttemp,
+        engineRefTorque, intaketemp, intakePressure, baroPressure, mafPressure,
+        throttlePos, ctrlVoltage, ambitemp;
     ProgressBar speedRing;
     SupportMapFragment mapFragment;
     BluetoothManager bluetoothManager;
@@ -65,6 +68,18 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
         speedRing = findViewById(R.id.DashboardActivity_speedring);
         fuel = findViewById(R.id.DashboardActivity_fuel);
         oiltemp = findViewById(R.id.DashboardActivity_oiltemp);
+        calcEngineLoad = findViewById(R.id.DashboardActivity_calcEngineLoad);
+        absEngineLoad = findViewById(R.id.DashboardActivity_absEngineLoad);
+        engineTorquePercentage = findViewById(R.id.DashboardActivity_engineTorque);
+        coolanttemp = findViewById(R.id.DashboardActivity_coolantTemp);
+        engineRefTorque = findViewById(R.id.DashboardActivity_engineRefTorque);
+        intaketemp = findViewById(R.id.DashboardActivity_intakeTemp);
+        intakePressure = findViewById(R.id.DashboardActivity_intakePressure);
+        baroPressure = findViewById(R.id.DashboardActivity_baroPressure);
+        mafPressure = findViewById(R.id.DashboardActivity_mafPressure);
+        throttlePos = findViewById(R.id.DashboardActivity_throttlePosition);
+        ctrlVoltage = findViewById(R.id.DashboardActivity_controlVoltage);
+        ambitemp = findViewById(R.id.DashboardActivity_ambtemp);
 
         //ScrollView
         scrollView = findViewById(R.id.DashboardActivity_srollView);
@@ -105,9 +120,21 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
                 distance.setText(String.format("%03d", dataPoint.getVehicleRunningDistance()));
                 fuel.setText(String.format("%03d", dataPoint.getFuelLevel()));
                 oiltemp.setText(String.format("%03d", dataPoint.getEngineOilTemperature()));
+                calcEngineLoad.setText(String.format("%03d", dataPoint.getCalculatedEngineLoad()));
+                absEngineLoad.setText(String.format("%03d", dataPoint.getAbsoluteEngineLoad()));
+                engineTorquePercentage.setText(String.format("%03d", dataPoint.getTorquePercentage()));
+                coolanttemp.setText(String.format("%03d", dataPoint.getEngineCoolantTemperature()));
+                engineRefTorque.setText(String.format("%05d", dataPoint.getReferenceTorque()));
+                intaketemp.setText(String.format("%03d", dataPoint.getIntakeTemperature()));
+                intakePressure.setText(String.format("%03d", dataPoint.getIntakePressure()));
+                baroPressure.setText(String.format("%03d", dataPoint.getBarometricPressure()));
+                mafPressure.setText(String.format("%03d", dataPoint.getFlowPressure()));
+                throttlePos.setText(String.format("%03d", dataPoint.getThrottlePosition()));
+                ctrlVoltage.setText(String.format("%03d", dataPoint.getControlModuleVoltage()));
+                ambitemp.setText(String.format("%03d", dataPoint.getAmbientTemperature()));
 
-                ChartMaker.addSpeedEntry(speedChart, dataPoint, time);
-                ChartMaker.addRPMEntry(rpmChart, dataPoint, time);
+                ChartMaker.addSpeedEntry(DashboardActivity.this, speedChart, dataPoint, time);
+                ChartMaker.addRPMEntry(DashboardActivity.this, rpmChart, dataPoint, time);
                 time++;
             }
         });
