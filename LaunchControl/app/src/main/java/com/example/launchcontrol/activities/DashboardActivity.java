@@ -8,6 +8,7 @@ package com.example.launchcontrol.activities;
 
 import android.Manifest;
 import android.bluetooth.BluetoothDevice;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 
@@ -15,6 +16,7 @@ import android.os.Bundle;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.launchcontrol.R;
 import com.example.launchcontrol.animations.ProgressBarAnimation;
@@ -25,6 +27,7 @@ import com.example.launchcontrol.managers.BluetoothManager;
 import com.example.launchcontrol.models.DataPoint;
 import com.example.launchcontrol.utilities.ChartMaker;
 import com.example.launchcontrol.utilities.ReconnectSnackbarMaker;
+import com.example.launchcontrol.utilities.RequestCodes;
 import com.github.mikephil.charting.charts.LineChart;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -89,6 +92,10 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
                 .findFragmentById(R.id.DashboardActivity_map);
         mapFragment.getMapAsync(this);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            String[] permissionRequested = {Manifest.permission.ACCESS_FINE_LOCATION};
+            requestPermissions(permissionRequested, RequestCodes.LOCATION_ACCESS_CODE);
+        }
 
         //Chart Setup
         speedChart = findViewById(R.id.DashboardActivity_speedchart);
@@ -186,8 +193,8 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
                 }
             });
         } catch (SecurityException e) {
-            String[] permissionRequested = {Manifest.permission.ACCESS_COARSE_LOCATION};
-            requestPermissions(permissionRequested, 2);
+            String[] permissionRequested = {Manifest.permission.ACCESS_FINE_LOCATION};
+            requestPermissions(permissionRequested, RequestCodes.LOCATION_ACCESS_CODE);
         }
     }
 
@@ -213,5 +220,17 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
     public void onConnectError(BluetoothDevice bluetoothDevice, String message) {
         ReconnectSnackbarMaker.MakeReconnectSnackbar(scrollView, "There was an error connecting with your device. Error: " +
                 message);
+    }
+
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == RequestCodes.LOCATION_ACCESS_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Request for location granted", Toast.LENGTH_LONG).show();
+                getLocation();
+            } else {
+                Toast.makeText(this, "Unable to request location services", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }
