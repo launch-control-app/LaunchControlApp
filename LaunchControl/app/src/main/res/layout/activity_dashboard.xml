@@ -1199,7 +1199,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="1200dp"
+            android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/DashboardActivity_stats"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -1208,11 +1208,13 @@
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/DashboardActivity_speedchart"
+                android:layout_margin="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"/>
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/DashboardActivity_rpmchart"
+                android:layout_margin="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"/>
 
