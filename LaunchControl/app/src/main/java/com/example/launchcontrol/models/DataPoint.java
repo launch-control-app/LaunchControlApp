@@ -278,6 +278,10 @@ public class DataPoint {
             latLng = new LatLng(location.getLatitude(), location.getLongitude());
     }
 
+    public LatLng getLatLng()
+    {
+        return latLng;
+    }
 
     @Override
     public String toString()

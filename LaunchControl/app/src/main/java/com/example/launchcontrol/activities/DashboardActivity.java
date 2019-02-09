@@ -9,6 +9,7 @@ package com.example.launchcontrol.activities;
 import android.Manifest;
 import android.bluetooth.BluetoothDevice;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 
@@ -35,9 +36,11 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 public class DashboardActivity extends AppCompatActivity implements BluetoothDataReceiver, BluetoothConnectionStatusReceiver,
@@ -144,6 +147,16 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
                 graphspeed.setText(String.format("%03d KPH", dataPoint.getVehicleSpeed()));
                 graphrpm.setText(String.format("%05d RPM", dataPoint.getEngineRPM()));
 
+                try
+                {
+                    googleMap.clear();
+                    googleMap.addMarker(new MarkerOptions().position(dataPoint.getLatLng()).title("Current location!")
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
+                }
+                catch (Exception e)
+                {}
+
+
                 ChartMaker.addSpeedEntry(DashboardActivity.this, speedChart, dataPoint, time);
                 ChartMaker.addRPMEntry(DashboardActivity.this, rpmChart, dataPoint, time);
                 time++;
@@ -193,6 +206,8 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
                                 .tilt(30)
                                 .build();
                         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                        googleMap.addMarker(new MarkerOptions().position(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())).title("Current location!")
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
                     }
                 }
             });
