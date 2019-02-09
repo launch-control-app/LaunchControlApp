@@ -8,6 +8,8 @@ package com.example.launchcontrol.activities;
 
 import android.Manifest;
 import android.bluetooth.BluetoothDevice;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 
@@ -24,6 +26,18 @@ import com.example.launchcontrol.interfaces.BluetoothConnectionStatusReceiver;
 import com.example.launchcontrol.interfaces.BluetoothDataReceiver;
 import com.example.launchcontrol.managers.BluetoothManager;
 import com.example.launchcontrol.models.DataPoint;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -36,7 +50,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-public class DashboardActivity extends AppCompatActivity implements BluetoothDataReceiver, BluetoothConnectionStatusReceiver, OnMapReadyCallback {
+public class DashboardActivity extends AppCompatActivity implements BluetoothDataReceiver, BluetoothConnectionStatusReceiver, OnMapReadyCallback,
+        OnChartValueSelectedListener {
 
     TextView speed, rpm, runtime, runtimeUnit ,distance, fuel, oiltemp;
     ProgressBar speedRing;
@@ -46,6 +61,8 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationClient;
     private Location currentLocation;
+    private LineChart mChart;
+    private int counter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,13 +83,19 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
                 .findFragmentById(R.id.DashboardActivity_map);
         mapFragment.getMapAsync(this);
 
+        mChart = findViewById(R.id.DashboardActivity_speedchart);
+        mChart.setOnChartValueSelectedListener(this);
+        configureChart();
+        //addEntry();
+
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        getLocation();
+
 
         bluetoothManager = BluetoothManager.getBluetoothManager(this);
         bluetoothManager.registerBluetoothDataReceiver(this);
         bluetoothManager.registerBluetoothConnectionStatusReciever(this);
-
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        getLocation();
     }
 
     @Override
@@ -114,6 +137,8 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
                 fuel.setText(String.format("%03d", dataPoint.getFuelLevel()));
                 oiltemp.setText(String.format("%03d", dataPoint.getEngineOilTemperature()));
 
+                addEntry(dataPoint);
+
             }
         });
     }
@@ -153,9 +178,8 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
                 public void onSuccess(Location location) {
                     if (location != null) {
                         currentLocation = location;
-                        LatLng loc = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-                        mMap.addMarker(new MarkerOptions().position(loc).title("Marker at your place!"));
-
+                        //LatLng loc = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+                        //mMap.addMarker(new MarkerOptions().position(loc).title("Marker at your place!"));
                         CameraPosition cameraPosition = new CameraPosition.Builder()
                                 .target(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()))
                                 .zoom(14)
@@ -163,19 +187,132 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
                                 .tilt(30)
                                 .build();
                         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
-
-                    } else {
-                        Toast.makeText(getApplicationContext(),
-                                "Turn on location services to use maps.",
-                                Toast.LENGTH_SHORT).show();
                     }
                 }
             });
         } catch (SecurityException e) {
             String[] permissionRequested = {Manifest.permission.ACCESS_COARSE_LOCATION};
             requestPermissions(permissionRequested, 2);
+        }
+    }
+
+    private void configureChart()
+    {
+        // no description text
+        Description description = new  Description();
+        description.setText("");
+        mChart.setDescription(description);
+
+        mChart.setNoDataText("You need to provide data for the chart.");
+
+        // enable touch gestures
+        mChart.setTouchEnabled(true);
+
+        // enable scaling and dragging
+        mChart.setDragEnabled(true);
+        mChart.setScaleEnabled(true);
+        mChart.setDrawGridBackground(false);
+
+        // if disabled, scaling can be done on x- and y-axis separately
+        mChart.setPinchZoom(true);
+
+        // set an alternative background color
+        mChart.setBackgroundColor(Color.LTGRAY);
+
+        LineData data = new LineData();
+        data.setValueTextColor(Color.WHITE);
+
+        // add empty data
+        mChart.setData(data);
+
+        Typeface tf = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
+
+        // get the legend (only possible after setting data)
+        Legend l = mChart.getLegend();
+
+        // modify the legend ...
+        // l.setPosition(LegendPosition.LEFT_OF_CHART);
+        l.setForm(Legend.LegendForm.LINE);
+        l.setTypeface(tf);
+        l.setTextColor(Color.WHITE);
+
+        XAxis xl = mChart.getXAxis();
+        xl.setTypeface(tf);
+        xl.setTextColor(Color.WHITE);
+        xl.setDrawGridLines(false);
+        xl.setAvoidFirstLastClipping(true);
+        xl.setPosition(XAxis.XAxisPosition.BOTTOM);
+        //xl.setSpaceBetweenLabels(5);
+        xl.setEnabled(true);
+
+        YAxis leftAxis = mChart.getAxisLeft();
+        leftAxis.setTypeface(tf);
+        leftAxis.setTextColor(Color.WHITE);
+        leftAxis.setAxisMaxValue(100f);
+        leftAxis.setAxisMinValue(0f);
+        leftAxis.setDrawGridLines(false);
+
+        YAxis rightAxis = mChart.getAxisRight();
+        rightAxis.setEnabled(false);
+    }
+
+    private void addEntry(DataPoint dataPoint) {
+
+        LineData data = mChart.getData();
+
+        if (data != null) {
+
+            ILineDataSet set = data.getDataSetByIndex(0);
+            // set.addEntry(...); // can be called as well
+
+            if (set == null) {
+                set = createSet();
+                data.addDataSet(set);
+            }
+
+            Entry entry = new Entry();
+            entry.setX(counter);
+            entry.setY(dataPoint.getFuelLevel());
+            // add a new x-value first
+            data.addEntry(entry, 0);
+            counter++;
+            // let the chart know it's data has changed
+            mChart.notifyDataSetChanged();
+
+            // limit the number of visible entries
+            mChart.setVisibleXRangeMaximum(100);
+            // mChart.setVisibleYRange(30, AxisDependency.LEFT);
+
+            // move to the latest entry
+            mChart.moveViewToX(counter);
 
         }
+    }
+
+    private LineDataSet createSet() {
+
+        LineDataSet set = new LineDataSet(null, "Dynamic Data");
+        set.setAxisDependency(YAxis.AxisDependency.LEFT);
+        set.setColor(ColorTemplate.getHoloBlue());
+        set.setCircleColor(Color.WHITE);
+        set.setLineWidth(2f);
+        set.setCircleRadius(4f);
+        set.setFillAlpha(65);
+        set.setFillColor(ColorTemplate.getHoloBlue());
+        set.setHighLightColor(Color.rgb(244, 117, 117));
+        set.setValueTextColor(Color.WHITE);
+        set.setValueTextSize(9f);
+        set.setDrawValues(false);
+        return set;
+    }
+
+    @Override
+    public void onValueSelected(Entry e, Highlight h) {
+
+    }
+
+    @Override
+    public void onNothingSelected() {
+
     }
 }

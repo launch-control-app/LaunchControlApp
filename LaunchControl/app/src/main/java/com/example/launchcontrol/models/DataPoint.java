@@ -6,6 +6,17 @@
  */
 package com.example.launchcontrol.models;
 
+import android.content.Context;
+import android.location.Location;
+
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.gson.Gson;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class DataPoint {
 
     private String rawMessage;
@@ -43,6 +54,10 @@ public class DataPoint {
     //Fuel
     private int fuelLevel;
 
+    private String dateTimeStamp;
+
+    private LatLng latLng;
+
     public DataPoint(String message)
     {
         processMessage(message);
@@ -54,6 +69,11 @@ public class DataPoint {
         String[] parameters = message.split(",");
 
         rawMessage = message;
+
+        //Set timestamp
+        dateTimeStamp = DataPoint.getCurrentDateTimeStamp();
+
+        //Set location
 
         //VIN
         try
@@ -156,7 +176,6 @@ public class DataPoint {
         } catch (Exception e) {}
     }
 
-
     public String getVIN()
     {
         return (VIN != null) ? VIN : "";
@@ -244,10 +263,32 @@ public class DataPoint {
         return fuelLevel;
     }
 
+    private static String getCurrentDateTimeStamp()
+    {
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        Date now = new Date();
+        String strDate = sdfDate.format(now);
+        return strDate;
+    }
+
+    public void setLocation(Location location)
+    {
+        if (latLng == null && location != null)
+            latLng = new LatLng(location.getLatitude(), location.getLongitude());
+    }
+
+
     @Override
     public String toString()
     {
-        return rawMessage;
+        Gson gson = new Gson();
+        String jsonObjectString = gson.toJson(this);
+        return jsonObjectString;
     }
+
+
+
+
+
 
 }

@@ -5,13 +5,17 @@
  */
 package com.example.launchcontrol.managers;
 
+import android.Manifest;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
+import android.location.Location;
 
 import com.example.launchcontrol.interfaces.BluetoothConnectionStatusReceiver;
 import com.example.launchcontrol.interfaces.BluetoothDataReceiver;
 import com.example.launchcontrol.models.DataPoint;
 import com.github.nkzawa.socketio.client.Socket;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +34,9 @@ public class BluetoothManager implements DeviceCallback {
     private String deviceName = "DESKTOP-B4D2HN2";
     private Socket webSocket = WebSocketManager.getWebSocket();
 
+    private Context context;
+    private Location location;
+
     public static BluetoothManager getBluetoothManager(Context context)
     {
         if (bluetoothManager == null)
@@ -40,12 +47,14 @@ public class BluetoothManager implements DeviceCallback {
 
     private BluetoothManager(Context context)
     {
+        this.context = context;
         bluetooth = new Bluetooth(context);
         bluetooth.setDeviceCallback(this);
         bluetoothDataReceivers = new ArrayList<>();
         bluetoothConnectionStatusReceivers = new ArrayList<>();
         bluetooth.onStart();
         bluetooth.enable();
+        getLocation();
         connectToDevice();
     }
 
@@ -97,7 +106,9 @@ public class BluetoothManager implements DeviceCallback {
 
     @Override
     public void onMessage(String message) {
+        getLocation();
         DataPoint dataPoint = new DataPoint(message);
+        dataPoint.setLocation(location);
         for (BluetoothDataReceiver bluetoothDataReceiver : bluetoothDataReceivers)
             bluetoothDataReceiver.onDataReceived(dataPoint);
         webSocket.emit("data", dataPoint.toString()); //this happens on a different thread, so low perf overhead
@@ -125,5 +136,20 @@ public class BluetoothManager implements DeviceCallback {
     public void onConnectError(BluetoothDevice device, String message) {
         for (BluetoothConnectionStatusReceiver bluetoothConnectionStatusReceiver : bluetoothConnectionStatusReceivers)
             bluetoothConnectionStatusReceiver.onConnectError(device, message);
+    }
+
+    private void getLocation()
+    {
+        try
+        {
+            LocationServices.getFusedLocationProviderClient(context).getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    BluetoothManager.this.location = location;
+                }
+            }) ;
+        }
+        catch (SecurityException e)
+        { }
     }
 }
