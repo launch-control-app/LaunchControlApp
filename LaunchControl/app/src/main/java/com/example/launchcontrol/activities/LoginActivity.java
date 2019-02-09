@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity implements BluetoothDataRec
         constraintLayout = findViewById(R.id.loginActivity_rootLayout);
 
         //Set up Bluetooth
-        bluetoothManager = BluetoothManager.getBluetoothManager(this);
+        bluetoothManager = BluetoothManager.getBluetoothManager(this, null);
         bluetoothManager.registerBluetoothDataReceiver(this);
         bluetoothManager.registerBluetoothConnectionStatusReciever(this);
     }

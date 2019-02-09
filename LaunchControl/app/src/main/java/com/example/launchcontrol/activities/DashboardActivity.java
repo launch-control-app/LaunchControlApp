@@ -109,7 +109,7 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
         ChartMaker.configureChartSettings(rpmChart, this);
 
         //Bluetooth Setup
-        bluetoothManager = BluetoothManager.getBluetoothManager(this);
+        bluetoothManager = BluetoothManager.getBluetoothManager(this, currentLocation);
         bluetoothManager.registerBluetoothDataReceiver(this);
         bluetoothManager.registerBluetoothConnectionStatusReciever(this);
     }
@@ -149,9 +149,14 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
 
                 try
                 {
-                    googleMap.clear();
-                    googleMap.addMarker(new MarkerOptions().position(dataPoint.getLatLng()).title("Current location!")
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
+                    if (dataPoint.getLatLng() != null)
+                    {
+                        googleMap.clear();
+                        googleMap.addMarker(new MarkerOptions().position(dataPoint.getLatLng()).title("Current location!")
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
+
+                    }
+
                 }
                 catch (Exception e)
                 {}
