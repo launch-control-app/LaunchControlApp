@@ -43,7 +43,7 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
     TextView speed, rpm, runtime, runtimeUnit ,distance, fuel, oiltemp,
         calcEngineLoad, absEngineLoad, engineTorquePercentage, coolanttemp,
         engineRefTorque, intaketemp, intakePressure, baroPressure, mafPressure,
-        throttlePos, ctrlVoltage, ambitemp;
+        throttlePos, ctrlVoltage, ambitemp, graphspeed, graphrpm;
     ProgressBar speedRing;
     SupportMapFragment mapFragment;
     BluetoothManager bluetoothManager;
@@ -80,6 +80,8 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
         throttlePos = findViewById(R.id.DashboardActivity_throttlePosition);
         ctrlVoltage = findViewById(R.id.DashboardActivity_controlVoltage);
         ambitemp = findViewById(R.id.DashboardActivity_ambtemp);
+        graphspeed = findViewById(R.id.DashboardActivity_graphSpeed);
+        graphrpm = findViewById(R.id.DashboardActivity_graphRPM);
 
         //ScrollView
         scrollView = findViewById(R.id.DashboardActivity_srollView);
@@ -132,6 +134,8 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
                 throttlePos.setText(String.format("%03d", dataPoint.getThrottlePosition()));
                 ctrlVoltage.setText(String.format("%03d", dataPoint.getControlModuleVoltage()));
                 ambitemp.setText(String.format("%03d", dataPoint.getAmbientTemperature()));
+                graphspeed.setText(String.format("%03d KPH", dataPoint.getVehicleSpeed()));
+                graphrpm.setText(String.format("%05d RPM", dataPoint.getEngineRPM()));
 
                 ChartMaker.addSpeedEntry(DashboardActivity.this, speedChart, dataPoint, time);
                 ChartMaker.addRPMEntry(DashboardActivity.this, rpmChart, dataPoint, time);
