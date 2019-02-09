@@ -259,6 +259,8 @@ public class DataPoint {
         return controlModuleVoltage;
     }
 
+    public Integer getIntakePressure() { return intakePressure; }
+
     public Integer getFuelLevel()
     {
         return fuelLevel;

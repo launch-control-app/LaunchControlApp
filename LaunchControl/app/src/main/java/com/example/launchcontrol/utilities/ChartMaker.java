@@ -2,8 +2,16 @@ package com.example.launchcontrol.utilities;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Paint;
+import android.graphics.Shader;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 
+import com.example.launchcontrol.R;
 import com.example.launchcontrol.models.DataPoint;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -26,6 +34,15 @@ public class ChartMaker {
         lineChart.setDescription(description);
         lineChart.setNoDataText("You need to provide data for the chart.");
 
+        LinearGradient gradient = new LinearGradient(
+                0, 0, 1400, 0,
+                ContextCompat.getColor(activity, R.color.gradient_start),
+                ContextCompat.getColor(activity, R.color.gradient_end),
+                Shader.TileMode.CLAMP);
+
+        Paint paint = lineChart.getRenderer().getPaintRender();
+        paint.setShader(gradient);
+
         // Enable scaling, dragging, gestures
         lineChart.setTouchEnabled(true);
         lineChart.setDragEnabled(true);
@@ -34,7 +51,7 @@ public class ChartMaker {
         lineChart.setPinchZoom(true);
 
         // Set background color
-        lineChart.setBackgroundColor(Color.LTGRAY);
+        lineChart.setBackgroundColor(activity.getResources().getColor(R.color.backgroundNormal));
 
         // Add empty data
         LineData data = new LineData();
@@ -42,7 +59,7 @@ public class ChartMaker {
         lineChart.setData(data);
 
         // Get font
-        Typeface tf = Typeface.createFromAsset(activity.getAssets(), "OpenSans-Regular.ttf");
+        Typeface tf = ResourcesCompat.getFont(activity, R.font.poppins_light);
 
         // Configure Legend
         Legend l = lineChart.getLegend();
@@ -70,7 +87,7 @@ public class ChartMaker {
         rightAxis.setEnabled(false);
     }
 
-    public static void addSpeedEntry(LineChart speedChart, DataPoint dataPoint, int time) {
+    public static void addSpeedEntry(Activity activity, LineChart speedChart, DataPoint dataPoint, int time) {
 
         LineData data = speedChart.getData();
 
@@ -78,7 +95,7 @@ public class ChartMaker {
             ILineDataSet set = data.getDataSetByIndex(0);
 
             if (set == null) {
-                set = createDataSet("Speed [km/h]");
+                set = createDataSet("Speed [km/h]", activity);
                 data.addDataSet(set);
             }
 
@@ -90,21 +107,21 @@ public class ChartMaker {
 
             // Update chart
             speedChart.notifyDataSetChanged();
-            speedChart.setVisibleXRangeMaximum(100);
+            speedChart.setVisibleXRangeMaximum(10);
 
             // Move to the latest entry
             speedChart.moveViewToX(time);
         }
     }
 
-    public  static void addRPMEntry(LineChart rpmChart, DataPoint dataPoint, int time) {
+    public  static void addRPMEntry(Activity activity, LineChart rpmChart, DataPoint dataPoint, int time) {
         LineData data = rpmChart.getData();
 
         if (data != null) {
             ILineDataSet set = data.getDataSetByIndex(0);
 
             if (set == null) {
-                set = createDataSet("RPM");
+                set = createDataSet("RPM", activity);
                 data.addDataSet(set);
             }
 
@@ -116,7 +133,7 @@ public class ChartMaker {
 
             // Update chart
             rpmChart.notifyDataSetChanged();
-            rpmChart.setVisibleXRangeMaximum(100);
+            rpmChart.setVisibleXRangeMaximum(10);
 
             // Move to the latest entry
             rpmChart.moveViewToX(time);
@@ -124,19 +141,20 @@ public class ChartMaker {
 
     }
 
-    private static LineDataSet createDataSet(String legendName) {
+    private static LineDataSet createDataSet(String legendName, Activity activity) {
         LineDataSet set = new LineDataSet(null, legendName);
         set.setAxisDependency(YAxis.AxisDependency.LEFT);
         set.setColor(ColorTemplate.getHoloBlue());
-        set.setCircleColor(Color.WHITE);
-        set.setLineWidth(2f);
-        set.setCircleRadius(4f);
+        set.setLineWidth(3);
         set.setFillAlpha(65);
         set.setFillColor(ColorTemplate.getHoloBlue());
         set.setHighLightColor(Color.rgb(244, 117, 117));
         set.setValueTextColor(Color.WHITE);
         set.setValueTextSize(9f);
         set.setDrawValues(false);
+        set.setDrawCircles(false);
+        set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+
         return set;
     }
 
