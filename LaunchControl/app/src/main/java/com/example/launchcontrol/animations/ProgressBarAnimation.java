@@ -34,8 +34,8 @@ public class ProgressBarAnimation extends Animation {
     @Override
     protected void applyTransformation(float interpolatedTime, Transformation t) {
         super.applyTransformation(interpolatedTime, t);
-        float value = from + (to - from) * interpolatedTime;
-        progressBar.setProgress((int) value);
-        textView.setText(String.format("%03d",  (int)value));
+        float interpolatedProgress = from + (to - from) * interpolatedTime;
+        progressBar.setProgress((int) interpolatedProgress);
+        textView.setText(String.format("%03d",  (int) interpolatedProgress));
     }
 }
