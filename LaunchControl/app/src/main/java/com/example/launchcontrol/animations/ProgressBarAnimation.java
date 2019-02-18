@@ -11,6 +11,8 @@ import android.view.animation.Transformation;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 public class ProgressBarAnimation extends Animation {
 
     private ProgressBar progressBar;
@@ -18,7 +20,7 @@ public class ProgressBarAnimation extends Animation {
     private float from;
     private float  to;
 
-    public ProgressBarAnimation(ProgressBar progressBar, float from, float to) {
+    private ProgressBarAnimation(ProgressBar progressBar, float from, float to) {
         super();
         this.progressBar = progressBar;
         this.from = from;
@@ -36,6 +38,6 @@ public class ProgressBarAnimation extends Animation {
         super.applyTransformation(interpolatedTime, t);
         float interpolatedProgress = from + (to - from) * interpolatedTime;
         progressBar.setProgress((int) interpolatedProgress);
-        textView.setText(String.format("%03d",  (int) interpolatedProgress));
+        textView.setText(String.format(Locale.US, "%03d",  (int) interpolatedProgress));
     }
 }

@@ -19,6 +19,7 @@ import com.example.launchcontrol.interfaces.BluetoothConnectionStatusReceiver;
 import com.example.launchcontrol.interfaces.BluetoothDataReceiver;
 import com.example.launchcontrol.managers.BluetoothManager;
 import com.example.launchcontrol.models.DataPoint;
+import com.example.launchcontrol.utilities.PermsUtil;
 import com.example.launchcontrol.utilities.ReconnectSnackbarMaker;
 
 public class LoginActivity extends AppCompatActivity implements BluetoothDataReceiver, BluetoothConnectionStatusReceiver {
@@ -33,6 +34,8 @@ public class LoginActivity extends AppCompatActivity implements BluetoothDataRec
 
         //Get Views
         constraintLayout = findViewById(R.id.loginActivity_rootLayout);
+
+        PermsUtil.getPermissions(this);
 
         //Set up Bluetooth
         bluetoothManager = BluetoothManager.getBluetoothManager(this, null);

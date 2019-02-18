@@ -27,6 +27,7 @@ import com.example.launchcontrol.interfaces.BluetoothDataReceiver;
 import com.example.launchcontrol.managers.BluetoothManager;
 import com.example.launchcontrol.models.DataPoint;
 import com.example.launchcontrol.utilities.ChartMaker;
+import com.example.launchcontrol.utilities.PermsUtil;
 import com.example.launchcontrol.utilities.ReconnectSnackbarMaker;
 import com.example.launchcontrol.utilities.RequestCodes;
 import com.github.mikephil.charting.charts.LineChart;
@@ -217,8 +218,7 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
                 }
             });
         } catch (SecurityException e) {
-            String[] permissionRequested = {Manifest.permission.ACCESS_FINE_LOCATION};
-            requestPermissions(permissionRequested, RequestCodes.LOCATION_ACCESS_CODE);
+            PermsUtil.getPermissions(this);
         }
     }
 
