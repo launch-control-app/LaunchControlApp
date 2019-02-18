@@ -9,9 +9,12 @@ package com.example.launchcontrol.activities;
 import android.bluetooth.BluetoothDevice;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.launchcontrol.R;
@@ -27,6 +30,12 @@ public class LoginActivity extends AppCompatActivity implements BluetoothDataRec
     BluetoothManager bluetoothManager;
     ConstraintLayout constraintLayout;
 
+    TextInputEditText email, password;
+
+    TextView forgot_password;
+
+    Button login, signup;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +50,14 @@ public class LoginActivity extends AppCompatActivity implements BluetoothDataRec
         bluetoothManager = BluetoothManager.getBluetoothManager(this, null);
         bluetoothManager.registerBluetoothDataReceiver(this);
         bluetoothManager.registerBluetoothConnectionStatusReciever(this);
+
+        email = findViewById(R.id.loginActivity_email);
+        password = findViewById(R.id.loginActivity_password);
+
+        forgot_password = findViewById(R.id.loginActivity_forgot_password);
+
+        login = findViewById(R.id.loginActivity_login);
+        signup = findViewById(R.id.loginActivity_sign_up);
     }
 
     @Override
