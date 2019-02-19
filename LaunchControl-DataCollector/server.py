@@ -35,10 +35,12 @@ while True:
         try:
             str_to_send = getString(counter)
             client_socket.send(str_to_send)
-            counter += 100
-            counter %= 200
             print(str_to_send)
-            time.sleep(1.5)
+            if (counter == 255):
+                counter = 0
+            else:
+                counter = 255
+            time.sleep(0.5)
         except:
             print('Client disconnected')
             client_socket.close()
