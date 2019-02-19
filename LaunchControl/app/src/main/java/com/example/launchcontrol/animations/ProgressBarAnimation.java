@@ -6,6 +6,9 @@
  */
 package com.example.launchcontrol.animations;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.os.Build;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.ProgressBar;
@@ -38,6 +41,11 @@ public class ProgressBarAnimation extends Animation {
         super.applyTransformation(interpolatedTime, t);
         float interpolatedProgress = from + (to - from) * interpolatedTime;
         progressBar.setProgress((int) interpolatedProgress);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            progressBar.setProgressTintList(ColorStateList.valueOf(
+                    Color.argb(255, 255,
+                            255-(int) interpolatedProgress, 255-(int)interpolatedProgress)));
+
         textView.setText(String.format(Locale.US, "%03d",  (int) interpolatedProgress));
     }
 }
