@@ -7,11 +7,13 @@
 package com.example.launchcontrol.activities;
 
 import android.bluetooth.BluetoothDevice;
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -47,7 +49,7 @@ public class LoginActivity extends AppCompatActivity implements BluetoothDataRec
         PermsUtil.getPermissions(this);
 
         //Set up Bluetooth
-        bluetoothManager = BluetoothManager.getBluetoothManager(this, null);
+        bluetoothManager = BluetoothManager.getBluetoothManager(this);
         bluetoothManager.registerBluetoothDataReceiver(this);
         bluetoothManager.registerBluetoothConnectionStatusReciever(this);
 
@@ -55,9 +57,31 @@ public class LoginActivity extends AppCompatActivity implements BluetoothDataRec
         password = findViewById(R.id.loginActivity_password);
 
         forgot_password = findViewById(R.id.loginActivity_forgot_password);
+        forgot_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         login = findViewById(R.id.loginActivity_login);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: Implement Login
+            }
+        });
+
         signup = findViewById(R.id.loginActivity_sign_up);
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -66,32 +90,35 @@ public class LoginActivity extends AppCompatActivity implements BluetoothDataRec
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-               Toast.makeText(LoginActivity.this, dataPoint.toString(), Toast.LENGTH_SHORT).show();
+               //do something to the UI here
             }
         });
 
     }
 
+
+
+
     @Override
     public void onDeviceConnected(BluetoothDevice bluetoothDevice) {
-        ReconnectSnackbarMaker.MakeConnectedSnackbar(constraintLayout);
+       // ReconnectSnackbarMaker.MakeConnectedSnackbar(constraintLayout);
     }
 
     @Override
     public void onDeviceDisconnected(BluetoothDevice bluetoothDevice, String message) {
-        ReconnectSnackbarMaker.MakeReconnectSnackbar(constraintLayout, "The bluetooth connection has been lost! Error: " +
-                message);
+//        ReconnectSnackbarMaker.MakeReconnectSnackbar(constraintLayout, "The bluetooth connection has been lost! Error: " +
+//                message);
     }
 
     @Override
     public void onError(String message) {
-        ReconnectSnackbarMaker.MakeReconnectSnackbar(constraintLayout, "There was an error with the bluetooth connection. Error: " +
-                message);
+//        ReconnectSnackbarMaker.MakeReconnectSnackbar(constraintLayout, "There was an error with the bluetooth connection. Error: " +
+//                message);
     }
 
     @Override
     public void onConnectError(BluetoothDevice bluetoothDevice, String message) {
-        ReconnectSnackbarMaker.MakeReconnectSnackbar(constraintLayout, "There was an error connecting with your device. Error: " +
-                message);
+//        ReconnectSnackbarMaker.MakeReconnectSnackbar(constraintLayout, "There was an error connecting with your device. Error: " +
+//                message);
     }
 }

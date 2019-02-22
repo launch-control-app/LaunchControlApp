@@ -21,7 +21,7 @@ public class ReconnectSnackbarMaker {
             @Override
             public void onClick(View v) {
 
-                BluetoothManager.getBluetoothManager(v.getContext(), null).tryReconnectToDevice();
+                BluetoothManager.getBluetoothManager(v.getContext()).tryReconnectToDevice();
                 snackbar.dismiss();
             }
         });
@@ -31,7 +31,7 @@ public class ReconnectSnackbarMaker {
     public static void MakeConnectedSnackbar(View rootView)
     {
         final Snackbar snackbar = Snackbar
-                .make(rootView, "Device reconnected!", Snackbar.LENGTH_LONG);
+                .make(rootView, "Device connected!", Snackbar.LENGTH_LONG);
         snackbar.show();
     }
 

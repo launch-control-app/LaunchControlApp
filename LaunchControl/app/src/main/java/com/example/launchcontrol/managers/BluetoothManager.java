@@ -19,6 +19,7 @@ import com.example.launchcontrol.interfaces.BluetoothDataReceiver;
 import com.example.launchcontrol.models.DataPoint;
 import com.example.launchcontrol.utilities.RequestCodes;
 import com.github.nkzawa.socketio.client.Socket;
+import com.google.android.gms.*;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -56,20 +57,20 @@ public class BluetoothManager implements DeviceCallback, LocationListener {
     private FusedLocationProviderClient fusedLocationProviderClient;
     private LocationRequest locationRequest;
 
-    public static BluetoothManager getBluetoothManager(Context context, Location lastLocation)
+    public static BluetoothManager getBluetoothManager(Context context)
     {
         if (bluetoothManager == null)
-            bluetoothManager = new BluetoothManager(context, lastLocation);
+            bluetoothManager = new BluetoothManager(context);
 
         return bluetoothManager;
     }
 
-    private BluetoothManager(Context context, Location lastLocation)
+
+    private BluetoothManager(Context context)
     {
         this.context = context;
 
         //configure location
-        location = lastLocation;
         locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(1500);

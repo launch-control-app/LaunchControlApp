@@ -7,11 +7,14 @@ package com.example.launchcontrol.activities;
 
 import android.bluetooth.BluetoothDevice;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.TextUtils;
+import android.util.Patterns;
+import android.view.View;
 import android.widget.Button;
 
 import com.example.launchcontrol.R;
@@ -38,7 +41,7 @@ public class RegisterActivity extends AppCompatActivity implements BluetoothData
         constraintLayout = findViewById(R.id.registerActivity_rootLayout);
 
         //Set up Bluetooth
-        bluetoothManager = BluetoothManager.getBluetoothManager(this, null);
+        bluetoothManager = BluetoothManager.getBluetoothManager(this);
         bluetoothManager.registerBluetoothDataReceiver(this);
         bluetoothManager.registerBluetoothConnectionStatusReciever(this);
 
@@ -48,6 +51,16 @@ public class RegisterActivity extends AppCompatActivity implements BluetoothData
         verify_password = findViewById(R.id.registerActivity_verify_password);
 
         sign_up = findViewById(R.id.registerActivity_sign_up);
+        sign_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (validateLoginDetails())
+                {
+                    //TODO: Implement server calls
+                    snackbarMaker("Ready to sign-up!!");
+                }
+            }
+        });
     }
 
     @Override
@@ -83,4 +96,41 @@ public class RegisterActivity extends AppCompatActivity implements BluetoothData
             }
         });
     }
+
+    private boolean validateLoginDetails()
+    {
+        boolean fields_check =  !TextUtils.isEmpty(email.getText()) &&
+                !TextUtils.isEmpty(password.getText()) &&
+                !TextUtils.isEmpty(vin.getText()) &&
+                !TextUtils.isEmpty(verify_password.getText());
+        if (!fields_check)
+        {
+            snackbarMaker("One or more fields are empty!");
+            return false;
+        }
+
+        boolean password_check = password.getText().toString().equals(verify_password.getText().toString());
+        if (!password_check)
+        {
+            snackbarMaker("The passwords do not match!");
+            return false;
+        }
+
+        boolean email_check = Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches();
+        if (!email_check)
+        {
+            snackbarMaker("Email address isn't valid!");
+            return false;
+        }
+
+        return true;
+    }
+
+    private void snackbarMaker(String text)
+    {
+        final Snackbar snackbar = Snackbar
+                .make(constraintLayout, text, Snackbar.LENGTH_LONG);
+        snackbar.show();
+    }
+
 }

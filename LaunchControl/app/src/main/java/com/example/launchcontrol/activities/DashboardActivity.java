@@ -110,7 +110,7 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
         ChartMaker.configureChartSettings(rpmChart, this);
 
         //Bluetooth Setup
-        bluetoothManager = BluetoothManager.getBluetoothManager(this, currentLocation);
+        bluetoothManager = BluetoothManager.getBluetoothManager(this);
         bluetoothManager.registerBluetoothDataReceiver(this);
         bluetoothManager.registerBluetoothConnectionStatusReciever(this);
     }
