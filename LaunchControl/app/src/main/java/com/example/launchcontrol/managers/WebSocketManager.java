@@ -24,6 +24,7 @@ public class WebSocketManager {
         return webSocketManager.socket;
     }
 
+    //TODO: Add auth here?
     private WebSocketManager()
     {
         try

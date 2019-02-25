@@ -157,6 +157,7 @@ public class BluetoothManager implements DeviceCallback, LocationListener {
         dataPoint.setLocation(location);
         for (BluetoothDataReceiver bluetoothDataReceiver : bluetoothDataReceivers)
             bluetoothDataReceiver.onDataReceived(dataPoint);
+        //TODO: Add emit auth?
         webSocket.emit("data", dataPoint.toString()); //this happens on a different thread, so low perf overhead
     }
 
