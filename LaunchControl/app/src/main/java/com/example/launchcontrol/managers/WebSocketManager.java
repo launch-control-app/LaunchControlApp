@@ -14,8 +14,8 @@ public class WebSocketManager {
 
     private Socket socket;
     private static WebSocketManager webSocketManager;
-    private String domainName = "https://afternoon-mountain-12604.herokuapp.com/"; //TODO: this is a placeholder
-
+    private String domainName = "https://afternoon-mountain-12604.herokuapp.com/";
+    
     public static Socket getWebSocket()
     {
         if (webSocketManager == null)
@@ -24,7 +24,7 @@ public class WebSocketManager {
         return webSocketManager.socket;
     }
 
-    //TODO: Add auth here?
+    //TODO: Add authentication here?
     private WebSocketManager()
     {
         try
