@@ -1,3 +1,8 @@
+/**
+ * Creation Date: Saturday, March 2nd 2019
+ * Original Author: Rohan Rao
+ * Contents of File: Utility class to request permissions
+ */
 package com.example.launchcontrol.utilities;
 
 import android.Manifest;

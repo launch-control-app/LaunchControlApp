@@ -1,3 +1,9 @@
+/**
+ * Creation Date: Saturday, March 2nd 2019
+ * Original Author: Rohan Rao
+ * Contents of File: Model class for logging in
+ */
+
 package com.example.launchcontrol.models;
 
 import com.google.gson.annotations.Expose;

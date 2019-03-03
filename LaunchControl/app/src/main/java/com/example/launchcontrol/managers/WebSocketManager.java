@@ -15,7 +15,7 @@ public class WebSocketManager {
     private Socket socket;
     private static WebSocketManager webSocketManager;
     private String domainName = "https://afternoon-mountain-12604.herokuapp.com/";
-    
+
     public static Socket getWebSocket()
     {
         if (webSocketManager == null)

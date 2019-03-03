@@ -1,3 +1,9 @@
+/**
+ * Creation Date: Saturday, March 2nd 2019
+ * Original Author: Rohan Rao
+ * Contents of File: Utility class to create charts
+ */
+
 package com.example.launchcontrol.utilities;
 
 import android.app.Activity;
