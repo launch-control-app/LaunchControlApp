@@ -18,4 +18,6 @@ public interface Session {
     String getPassword();
 
     void invalidate();
+
+    void validate();
 }

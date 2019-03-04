@@ -12,25 +12,16 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitUtil {
-    public static Retrofit getRetrofitClient(String url, Context context)
-    {
-        return new Retrofit.Builder()
-                .baseUrl(url)
-                .client(RetrofitUtil.getOkHttpClient(context))
-                .addConverterFactory(GsonConverterFactory.create(new Gson()))
-                .build();
+
+    private static Retrofit retrofit = null;
+
+    public static Retrofit getRetrofitClient(String url) {
+        if (retrofit == null)
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(url)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        return retrofit;
     }
 
-    private static OkHttpClient getOkHttpClient(Context context)
-    {
-        OkHttpClient.Builder okhttpClientBuilder = new OkHttpClient.Builder();
-
-        okhttpClientBuilder.connectTimeout(30, TimeUnit.SECONDS);
-        okhttpClientBuilder.readTimeout(30, TimeUnit.SECONDS);
-        okhttpClientBuilder.writeTimeout(30, TimeUnit.SECONDS);
-
-        okhttpClientBuilder.addInterceptor(new TokenRenewInterceptor(context));
-
-        return okhttpClientBuilder.build();
-    }
 }

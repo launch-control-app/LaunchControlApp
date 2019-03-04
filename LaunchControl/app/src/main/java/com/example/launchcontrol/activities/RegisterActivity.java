@@ -6,6 +6,7 @@
 package com.example.launchcontrol.activities;
 
 import android.bluetooth.BluetoothDevice;
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
@@ -13,17 +14,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.launchcontrol.R;
+import com.example.launchcontrol.interfaces.AuthenticationListener;
 import com.example.launchcontrol.interfaces.BluetoothConnectionStatusReceiver;
 import com.example.launchcontrol.interfaces.BluetoothDataReceiver;
 import com.example.launchcontrol.managers.BluetoothManager;
+import com.example.launchcontrol.managers.SessionManager;
+import com.example.launchcontrol.managers.WebSocketManager;
 import com.example.launchcontrol.models.DataPoint;
+import com.example.launchcontrol.models.Token;
+import com.example.launchcontrol.utilities.LoginUtil;
+import com.github.nkzawa.socketio.client.Socket;
 
-public class RegisterActivity extends AppCompatActivity implements BluetoothDataReceiver, BluetoothConnectionStatusReceiver {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class RegisterActivity extends AppCompatActivity implements AuthenticationListener {
 
     BluetoothManager bluetoothManager;
     ConstraintLayout constraintLayout;
@@ -40,10 +52,6 @@ public class RegisterActivity extends AppCompatActivity implements BluetoothData
         // Get view
         constraintLayout = findViewById(R.id.registerActivity_rootLayout);
 
-        //Set up Bluetooth
-        bluetoothManager = BluetoothManager.getBluetoothManager(this);
-        bluetoothManager.registerBluetoothDataReceiver(this);
-        bluetoothManager.registerBluetoothConnectionStatusReciever(this);
 
         email = findViewById(R.id.registerActivity_email);
         vin = findViewById(R.id.registerActivity_vin);
@@ -56,46 +64,23 @@ public class RegisterActivity extends AppCompatActivity implements BluetoothData
             public void onClick(View v) {
                 if (validateLoginDetails())
                 {
-                    //TODO: Implement server calls
-                    snackbarMaker("Ready to sign-up!!");
+                    LoginUtil.getLaunchControlService().signUp(email.getText().toString(), password.getText().toString(), vin.getText().toString()).enqueue(new Callback<Token>() {
+                        @Override
+                        public void onResponse(Call<Token> call, Response<Token> response) {
+                            Log.d("LOGIN", "TOKEN IN RESPONSE: " + response.body().getToken());
+                            RegisterActivity.this.saveToken(response.body().getToken());
+                        }
+
+                        @Override
+                        public void onFailure(Call<Token> call, Throwable t) {
+
+                        }
+                    });
                 }
             }
         });
     }
 
-    @Override
-    public void onDeviceConnected(BluetoothDevice bluetoothDevice) {
-
-    }
-
-    @Override
-    public void onDeviceDisconnected(BluetoothDevice bluetoothDevice, String message) {
-
-    }
-
-    @Override
-    public void onError(String message) {
-
-    }
-
-    @Override
-    public void onConnectError(BluetoothDevice bluetoothDevice, String message) {
-
-    }
-
-    @Override
-    public void onDataReceived(final DataPoint dataPoint) {
-        //Bluetooth info will be received here
-        this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                // Only try fetching VIN if the field is empty
-                if (TextUtils.isEmpty(vin.getText().toString())) {
-                    vin.setText(dataPoint.getVIN());
-                }
-            }
-        });
-    }
 
     private boolean validateLoginDetails()
     {
@@ -131,6 +116,28 @@ public class RegisterActivity extends AppCompatActivity implements BluetoothData
         final Snackbar snackbar = Snackbar
                 .make(constraintLayout, text, Snackbar.LENGTH_LONG);
         snackbar.show();
+    }
+
+    private void saveToken(String token)
+    {
+        Log.d("LOGIN", "TOKEN IN LOGINACTIVITY: " + token);
+        SessionManager.getSessionManager(this).saveToken(token);
+        Socket socket = WebSocketManager.getWebSocket(this);
+        BluetoothManager.getBluetoothManager(this).setWebSocket(socket);
+    }
+
+    @Override
+    public void onUserLoggedOut() {
+
+    }
+
+    @Override
+    public void onUserLogin() {
+        Log.d("LOGIN", "LOGGED IN!");
+        Intent intent = new Intent(RegisterActivity.this, DashboardActivity.class);
+        finish();
+        startActivity(intent);
+
     }
 
 }

@@ -49,7 +49,7 @@ public class BluetoothManager implements DeviceCallback, LocationListener {
     private List<BluetoothConnectionStatusReceiver> bluetoothConnectionStatusReceivers;
 
     private String deviceName = "DESKTOP-B4D2HN2";
-    private Socket webSocket = WebSocketManager.getWebSocket();
+    private Socket webSocket;
 
     private Context context;
     private Location location;
@@ -157,8 +157,8 @@ public class BluetoothManager implements DeviceCallback, LocationListener {
         dataPoint.setLocation(location);
         for (BluetoothDataReceiver bluetoothDataReceiver : bluetoothDataReceivers)
             bluetoothDataReceiver.onDataReceived(dataPoint);
-        //TODO: Add emit auth?
-        webSocket.emit("data", dataPoint.toString()); //this happens on a different thread, so low perf overhead
+        if (webSocket != null)
+            webSocket.emit("data", dataPoint.toString()); //this happens on a different thread, so low perf overhead
     }
 
     @Override
@@ -203,5 +203,9 @@ public class BluetoothManager implements DeviceCallback, LocationListener {
     @Override
     public void onProviderDisabled(String provider) {
 
+    }
+
+    public void setWebSocket(Socket socket) {
+        this.webSocket = socket;
     }
 }

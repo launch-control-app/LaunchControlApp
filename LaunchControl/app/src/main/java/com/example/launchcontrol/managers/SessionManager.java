@@ -6,15 +6,16 @@ import android.content.SharedPreferences;
 import com.example.launchcontrol.interfaces.AuthenticationListener;
 import com.example.launchcontrol.interfaces.LaunchControlService;
 import com.example.launchcontrol.interfaces.Session;
-import com.example.launchcontrol.models.AccountInfo;
-import com.example.launchcontrol.models.Authorization;
+import com.example.launchcontrol.models.Login;
+import com.example.launchcontrol.models.SignUp;
+import com.example.launchcontrol.models.Token;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 
-public class SessionManager implements Session, LaunchControlService {
+public class SessionManager implements Session {
 
     private static SessionManager sessionManager;
 
@@ -28,6 +29,8 @@ public class SessionManager implements Session, LaunchControlService {
     private String emailAddress = "";
     private String password = "";
     private String token = "";
+
+    private boolean authenticated = false;
 
     private List<AuthenticationListener> authenticationListenerList;
 
@@ -99,6 +102,12 @@ public class SessionManager implements Session, LaunchControlService {
             authenticationListener.onUserLoggedOut();
     }
 
+    @Override
+    public void validate() {
+        for (AuthenticationListener authenticationListener : authenticationListenerList)
+            authenticationListener.onUserLogin();
+    }
+
     public void addAuthenticationListener(AuthenticationListener authenticationListener)
     {
         this.authenticationListenerList.add(authenticationListener);
@@ -133,13 +142,12 @@ public class SessionManager implements Session, LaunchControlService {
     }
 
 
-    @Override
-    public Call<Authorization> loginAccount(String authKey) {
-        return null;
-    }
-
-    @Override
-    public Call<AccountInfo> getAccountInfo(String authKey, String accountId) {
-        return null;
+    public void setAuthenticated(boolean authenticated)
+    {
+        this.authenticated = authenticated;
+        if (this.authenticated)
+            this.validate();
+        else
+            this.invalidate();
     }
 }
