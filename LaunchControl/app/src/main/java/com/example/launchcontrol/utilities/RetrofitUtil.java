@@ -1,13 +1,5 @@
 package com.example.launchcontrol.utilities;
 
-import android.content.Context;
-
-import com.example.launchcontrol.managers.TokenRenewInterceptor;
-import com.google.gson.Gson;
-
-import java.util.concurrent.TimeUnit;
-
-import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

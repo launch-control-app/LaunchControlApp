@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.example.launchcontrol.managers.BluetoothManager;
 
-public class ReconnectSnackbarMaker {
+public class SnackbarMaker {
 
     public static void MakeReconnectSnackbar(View rootView, String message)
     {
@@ -32,6 +32,13 @@ public class ReconnectSnackbarMaker {
     {
         final Snackbar snackbar = Snackbar
                 .make(rootView, "Device connected!", Snackbar.LENGTH_LONG);
+        snackbar.show();
+    }
+
+    public static void MakeCustomSnackbar(View rootView, String message)
+    {
+        final Snackbar snackbar = Snackbar
+                .make(rootView, message, Snackbar.LENGTH_LONG);
         snackbar.show();
     }
 

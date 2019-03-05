@@ -5,31 +5,25 @@
  */
 package com.example.launchcontrol.activities;
 
-import android.bluetooth.BluetoothDevice;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.InputFilter;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.launchcontrol.R;
 import com.example.launchcontrol.interfaces.AuthenticationListener;
-import com.example.launchcontrol.interfaces.BluetoothConnectionStatusReceiver;
-import com.example.launchcontrol.interfaces.BluetoothDataReceiver;
-import com.example.launchcontrol.managers.BluetoothManager;
 import com.example.launchcontrol.managers.SessionManager;
 import com.example.launchcontrol.managers.WebSocketManager;
-import com.example.launchcontrol.models.DataPoint;
 import com.example.launchcontrol.models.Token;
 import com.example.launchcontrol.utilities.LoginUtil;
-import com.github.nkzawa.socketio.client.Socket;
+import com.example.launchcontrol.utilities.SnackbarMaker;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,12 +31,13 @@ import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity implements AuthenticationListener {
 
-    BluetoothManager bluetoothManager;
     ConstraintLayout constraintLayout;
 
     TextInputEditText email, vin, password, verify_password;
 
     Button sign_up;
+
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +47,7 @@ public class RegisterActivity extends AppCompatActivity implements Authenticatio
         // Get view
         constraintLayout = findViewById(R.id.registerActivity_rootLayout);
 
+        setupProgressDialog();
 
         email = findViewById(R.id.registerActivity_email);
         vin = findViewById(R.id.registerActivity_vin);
@@ -62,18 +58,24 @@ public class RegisterActivity extends AppCompatActivity implements Authenticatio
         sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (validateLoginDetails())
-                {
+                if (validateLoginDetails()) {
+                    progressDialog.show();
                     LoginUtil.getLaunchControlService().signUp(email.getText().toString(), password.getText().toString(), vin.getText().toString()).enqueue(new Callback<Token>() {
                         @Override
                         public void onResponse(Call<Token> call, Response<Token> response) {
-                            Log.d("LOGIN", "TOKEN IN RESPONSE: " + response.body().getToken());
-                            RegisterActivity.this.saveToken(response.body().getToken());
+                            if (response.body() == null || response.body().getToken() == null)
+                            {
+                                progressDialog.dismiss();
+                                SnackbarMaker.MakeCustomSnackbar(constraintLayout, "Duplicate username!");
+                                return;
+                            }
+                            RegisterActivity.this.processToken(response.body().getToken());
                         }
 
                         @Override
                         public void onFailure(Call<Token> call, Throwable t) {
-
+                            progressDialog.dismiss();
+                            SnackbarMaker.MakeCustomSnackbar(constraintLayout, "Something went wrong with the server! Please try again later.");
                         }
                     });
                 }
@@ -118,26 +120,35 @@ public class RegisterActivity extends AppCompatActivity implements Authenticatio
         snackbar.show();
     }
 
-    private void saveToken(String token)
+    private void processToken(String token)
     {
-        Log.d("LOGIN", "TOKEN IN LOGINACTIVITY: " + token);
         SessionManager.getSessionManager(this).saveToken(token);
-        Socket socket = WebSocketManager.getWebSocket(this);
-        BluetoothManager.getBluetoothManager(this).setWebSocket(socket);
+        WebSocketManager.getWebSocket(this, true);
     }
 
     @Override
     public void onUserLoggedOut() {
-
+        //Not needed...
     }
 
     @Override
     public void onUserLogin() {
-        Log.d("LOGIN", "LOGGED IN!");
+        progressDialog.dismiss();
         Intent intent = new Intent(RegisterActivity.this, DashboardActivity.class);
-        finish();
+        SessionManager.getSessionManager(this).unregisterAuthenticationListener(this);
+        SessionManager.getSessionManager(this).saveEmail(email.getText().toString());
+        SessionManager.getSessionManager(this).savePassword(password.getText().toString());
         startActivity(intent);
+    }
 
+    private void setupProgressDialog()
+    {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Sign Up");
+        progressDialog.setMessage("Signing up and logging in...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMax(100);
+        progressDialog.setCancelable(false);
     }
 
 }

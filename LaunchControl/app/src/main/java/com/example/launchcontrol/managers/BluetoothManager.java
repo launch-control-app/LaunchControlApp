@@ -65,6 +65,10 @@ public class BluetoothManager implements DeviceCallback, LocationListener {
         return bluetoothManager;
     }
 
+    public static void clearBluetoothManager() {
+        bluetoothManager = null;
+    }
+
 
     private BluetoothManager(Context context)
     {
@@ -207,5 +211,11 @@ public class BluetoothManager implements DeviceCallback, LocationListener {
 
     public void setWebSocket(Socket socket) {
         this.webSocket = socket;
+    }
+
+    public void disconnectFromDevice()
+    {
+        if (bluetooth.isConnected())
+            bluetooth.disconnect();
     }
 }

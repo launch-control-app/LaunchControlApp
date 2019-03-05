@@ -9,7 +9,6 @@ package com.example.launchcontrol.activities;
 import android.Manifest;
 import android.bluetooth.BluetoothDevice;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 
@@ -25,10 +24,12 @@ import com.example.launchcontrol.fragments.WorkaroundMapFragment;
 import com.example.launchcontrol.interfaces.BluetoothConnectionStatusReceiver;
 import com.example.launchcontrol.interfaces.BluetoothDataReceiver;
 import com.example.launchcontrol.managers.BluetoothManager;
+import com.example.launchcontrol.managers.SessionManager;
+import com.example.launchcontrol.managers.WebSocketManager;
 import com.example.launchcontrol.models.DataPoint;
 import com.example.launchcontrol.utilities.ChartMaker;
 import com.example.launchcontrol.utilities.PermsUtil;
-import com.example.launchcontrol.utilities.ReconnectSnackbarMaker;
+import com.example.launchcontrol.utilities.SnackbarMaker;
 import com.example.launchcontrol.utilities.RequestCodes;
 import com.github.mikephil.charting.charts.LineChart;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -110,9 +111,11 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
         ChartMaker.configureChartSettings(rpmChart, this);
 
         //Bluetooth Setup
+        BluetoothManager.clearBluetoothManager(); //force clear
         bluetoothManager = BluetoothManager.getBluetoothManager(this);
         bluetoothManager.registerBluetoothDataReceiver(this);
         bluetoothManager.registerBluetoothConnectionStatusReciever(this);
+        bluetoothManager.setWebSocket(WebSocketManager.getWebSocket(this, false));
     }
 
     @Override
@@ -225,24 +228,24 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
     //Bluetooth Connection Status Receiver Callbacks
     @Override
     public void onDeviceConnected(BluetoothDevice bluetoothDevice) {
-        ReconnectSnackbarMaker.MakeConnectedSnackbar(scrollView);
+        SnackbarMaker.MakeConnectedSnackbar(scrollView);
     }
 
     @Override
     public void onDeviceDisconnected(BluetoothDevice bluetoothDevice, String message) {
-        ReconnectSnackbarMaker.MakeReconnectSnackbar(scrollView, "The bluetooth connection has been lost! Error: " +
+        SnackbarMaker.MakeReconnectSnackbar(scrollView, "The bluetooth connection has been lost! Error: " +
                 message);
     }
 
     @Override
     public void onError(String message) {
-        ReconnectSnackbarMaker.MakeReconnectSnackbar(scrollView, "There was an error with the bluetooth connection. Error: " +
+        SnackbarMaker.MakeReconnectSnackbar(scrollView, "There was an error with the bluetooth connection. Error: " +
                 message);
     }
 
     @Override
     public void onConnectError(BluetoothDevice bluetoothDevice, String message) {
-        ReconnectSnackbarMaker.MakeReconnectSnackbar(scrollView, "There was an error connecting with your device. Error: " +
+        SnackbarMaker.MakeReconnectSnackbar(scrollView, "There was an error connecting with your device. Error: " +
                 message);
     }
 
@@ -256,5 +259,15 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
                 Toast.makeText(this, "Unable to request location services", Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        WebSocketManager.getWebSocket(this, false).disconnect();
+        SessionManager.getSessionManager(this).setAuthenticated(false);
+        bluetoothManager.unRegisterBluetoothConnectionStatusReciever(this);
+        bluetoothManager.unRegisterBluetoothDataReciever(this);
+        bluetoothManager.disconnectFromDevice();
+        finish();
     }
 }

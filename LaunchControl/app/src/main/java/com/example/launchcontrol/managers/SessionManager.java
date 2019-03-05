@@ -2,18 +2,13 @@ package com.example.launchcontrol.managers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.example.launchcontrol.interfaces.AuthenticationListener;
-import com.example.launchcontrol.interfaces.LaunchControlService;
 import com.example.launchcontrol.interfaces.Session;
-import com.example.launchcontrol.models.Login;
-import com.example.launchcontrol.models.SignUp;
-import com.example.launchcontrol.models.Token;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
 
 public class SessionManager implements Session {
 
@@ -61,7 +56,7 @@ public class SessionManager implements Session {
 
     @Override
     public String getToken() {
-        if (token != null)
+        if (token != null && !token.equals(""))
             return token;
         else
             return retrieveFromSharedPreferences(myToken);
@@ -75,7 +70,7 @@ public class SessionManager implements Session {
 
     @Override
     public String getEmail() {
-        if (emailAddress != null)
+        if (emailAddress != null && !emailAddress.equals(""))
             return emailAddress;
         else
             return retrieveFromSharedPreferences(myEmailAddress);
@@ -89,7 +84,7 @@ public class SessionManager implements Session {
 
     @Override
     public String getPassword() {
-        if (password != null)
+        if (password != null && !password.equals(""))
             return  password;
         else
             return retrieveFromSharedPreferences(myPassword);
@@ -108,31 +103,36 @@ public class SessionManager implements Session {
             authenticationListener.onUserLogin();
     }
 
-    public void addAuthenticationListener(AuthenticationListener authenticationListener)
+    public void registerAuthenticationListener(AuthenticationListener authenticationListener)
     {
         this.authenticationListenerList.add(authenticationListener);
     }
 
+    public void unregisterAuthenticationListener(AuthenticationListener authenticationListener)
+    {
+        if (authenticationListenerList.contains(authenticationListener))
+            this.authenticationListenerList.remove(authenticationListener);
+
+    }
+
     private void saveToSharedPreferences(String key, String value)
     {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(myPreferences,
-                Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(key, value);
         editor.apply();
+        editor.commit();
     }
 
     private String retrieveFromSharedPreferences(String key)
     {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(myPreferences,
-                Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
         return sharedPreferences.getString(key, "");
     }
 
     private void removeFromSharedPreferences(String key)
     {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(myPreferences,
-                Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
         if (sharedPreferences.contains(key))
         {
             SharedPreferences.Editor editor = sharedPreferences.edit();

@@ -7,9 +7,7 @@ package com.example.launchcontrol.managers;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.example.launchcontrol.utilities.ReconnectSnackbarMaker;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
@@ -24,11 +22,11 @@ public class WebSocketManager {
     private static WebSocketManager webSocketManager;
     private String domainName = "https://afternoon-mountain-12604.herokuapp.com/";
 
-    public static Socket getWebSocket(Context context)
+    public static Socket getWebSocket(Context context, boolean forceConnect)
     {
         if (webSocketManager == null)
             webSocketManager = new WebSocketManager(context);
-        else
+        else if (forceConnect)
             webSocketManager.connect(context);
 
         return webSocketManager.socket;
@@ -39,43 +37,48 @@ public class WebSocketManager {
         this.connect(context);
     }
 
-    public void connect(final Context context)
+    private void connect(final Context context)
     {
-        try
-        {
+        Log.d("LOGIN", "called connect...");
+        if (socket != null && socket.connected()) {
+            socket.disconnect();
+        }
+
+        try {
             socket = IO.socket(domainName);
             socket.connect();
-            socket.on("connect", new Emitter.Listener() {
+            socket.once("connect", new Emitter.Listener() {
                 @Override
                 public void call(Object... args) {
                     JSONObject obj = new JSONObject();
                     try
                     {
                         obj.put("token",SessionManager.getSessionManager(context).getToken());
-                    }catch (Exception e)
-                    {
+                    }catch (Exception e) {
                         //do nothing
                     }
-                    Log.d("LOGIN", "TOKEN IN WEBSOCKET: " + "{\"token\":" + "\"" + SessionManager.getSessionManager(context).getToken() + "\"" + "}");
                     socket.emit("authenticate", obj)
-                            .on("authenticated", new Emitter.Listener() {
+                            .once("authenticated", new Emitter.Listener() {
                                 @Override
                                 public void call(Object... args) {
-                                    Log.d("LOGIN", "AUTHENTICATION CHANNEL");
+                                    Log.d("LOGIN", "LOGGED IN!!!");
                                     SessionManager.getSessionManager(context).setAuthenticated(true);
 
                                 }
                             })
-                            .on("unauthorized", new Emitter.Listener() {
+                            .once("unauthorized", new Emitter.Listener() {
                                 @Override
                                 public void call(Object... args) {
                                     Log.d("LOGIN", "UNAUTHORIZED");
+                                    SessionManager.getSessionManager(context).setAuthenticated(false);
                                 }
                             });
                 }
             });
 
-        } catch (URISyntaxException e) {}
+        } catch (URISyntaxException e) {
+            Log.d("LOGIN", "HERE_FOUR");
+        }
     }
 
 }

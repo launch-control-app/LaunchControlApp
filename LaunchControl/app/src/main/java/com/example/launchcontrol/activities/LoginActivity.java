@@ -6,7 +6,7 @@
  */
 package com.example.launchcontrol.activities;
 
-import android.bluetooth.BluetoothDevice;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
@@ -14,28 +14,20 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.launchcontrol.R;
 import com.example.launchcontrol.interfaces.AuthenticationListener;
-import com.example.launchcontrol.interfaces.BluetoothConnectionStatusReceiver;
-import com.example.launchcontrol.interfaces.BluetoothDataReceiver;
-import com.example.launchcontrol.managers.BluetoothManager;
+import com.example.launchcontrol.interfaces.Session;
 import com.example.launchcontrol.managers.SessionManager;
 import com.example.launchcontrol.managers.WebSocketManager;
-import com.example.launchcontrol.models.DataPoint;
 import com.example.launchcontrol.models.Token;
 import com.example.launchcontrol.utilities.LoginUtil;
 import com.example.launchcontrol.utilities.PermsUtil;
-import com.example.launchcontrol.utilities.ReconnectSnackbarMaker;
-import com.github.nkzawa.socketio.client.Socket;
-
-import java.io.IOException;
+import com.example.launchcontrol.utilities.SnackbarMaker;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,19 +43,23 @@ public class LoginActivity extends AppCompatActivity implements AuthenticationLi
 
     Button login, signup;
 
+    ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
         //Get Views
         constraintLayout = findViewById(R.id.loginActivity_rootLayout);
+
+        setupProgressDialog();
 
         PermsUtil.getPermissions(this);
 
         //Set up auth listener
-        SessionManager.getSessionManager(this).addAuthenticationListener(this);
-
+        SessionManager.getSessionManager(this).registerAuthenticationListener(this);
 
         email = findViewById(R.id.loginActivity_email);
         password = findViewById(R.id.loginActivity_password);
@@ -82,18 +78,24 @@ public class LoginActivity extends AppCompatActivity implements AuthenticationLi
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: Implement Login
                 if (validateLoginDetails()) {
+                    progressDialog.show();
                     LoginUtil.getLaunchControlService().loginAccount(email.getText().toString(), password.getText().toString()).enqueue(new Callback<Token>() {
                         @Override
                         public void onResponse(Call<Token> call, Response<Token> response) {
-                            Log.d("LOGIN", "TOKEN IN RESPONSE: " + response.body().getToken());
-                            LoginActivity.this.saveToken(response.body().getToken());
+                            if (response.body() == null)
+                            {
+                                progressDialog.dismiss();
+                                SnackbarMaker.MakeCustomSnackbar(constraintLayout, "Username or password not recognized!");
+                                return;
+                            }
+                            LoginActivity.this.processToken(response.body().getToken());
                         }
 
                         @Override
                         public void onFailure(Call<Token> call, Throwable t) {
-
+                            progressDialog.dismiss();
+                            SnackbarMaker.MakeCustomSnackbar(constraintLayout, "Something went wrong with the server! Please try again later.");
                         }
                     });
                 }
@@ -109,6 +111,8 @@ public class LoginActivity extends AppCompatActivity implements AuthenticationLi
                 startActivity(intent);
             }
         });
+
+        fillLoginAndPasswordFields();
     }
 
 
@@ -139,25 +143,42 @@ public class LoginActivity extends AppCompatActivity implements AuthenticationLi
         snackbar.show();
     }
 
-    private void saveToken(String token)
+    private void processToken(String token)
     {
-        Log.d("LOGIN", "TOKEN IN LOGINACTIVITY: " + token);
         SessionManager.getSessionManager(this).saveToken(token);
-        Socket socket = WebSocketManager.getWebSocket(this);
-        BluetoothManager.getBluetoothManager(this).setWebSocket(socket);
+        WebSocketManager.getWebSocket(this, true);
     }
 
     @Override
     public void onUserLoggedOut() {
-
+        //Not needed...
     }
 
     @Override
     public void onUserLogin() {
-        Log.d("LOGIN", "LOGGED IN!");
+        progressDialog.dismiss();
         Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
-        finish();
+        SessionManager.getSessionManager(this).unregisterAuthenticationListener(this);
+        SessionManager.getSessionManager(this).saveEmail(email.getText().toString());
+        SessionManager.getSessionManager(this).savePassword(password.getText().toString());
         startActivity(intent);
+    }
 
+    private void setupProgressDialog()
+    {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Log In");
+        progressDialog.setMessage("Logging in...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMax(100);
+        progressDialog.setCancelable(false);
+    }
+
+    private void fillLoginAndPasswordFields()
+    {
+        String savedEmail = SessionManager.getSessionManager(this).getEmail();
+        String savedPassword = SessionManager.getSessionManager(this).getPassword();
+        email.setText(savedEmail);
+        password.setText(savedPassword);
     }
 }
