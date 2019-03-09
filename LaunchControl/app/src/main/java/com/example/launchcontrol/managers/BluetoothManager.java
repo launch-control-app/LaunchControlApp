@@ -12,6 +12,7 @@ import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.launchcontrol.activities.DashboardActivity;
 import com.example.launchcontrol.interfaces.BluetoothConnectionStatusReceiver;
@@ -48,7 +49,8 @@ public class BluetoothManager implements DeviceCallback, LocationListener {
     private List<BluetoothDataReceiver> bluetoothDataReceivers;
     private List<BluetoothConnectionStatusReceiver> bluetoothConnectionStatusReceivers;
 
-    private String deviceName = "DESKTOP-B4D2HN2";
+    //private String deviceName = "DESKTOP-B4D2HN2";
+    private String deviceName = "HC-05";
     private Socket webSocket;
 
     private Context context;
@@ -161,8 +163,11 @@ public class BluetoothManager implements DeviceCallback, LocationListener {
         dataPoint.setLocation(location);
         for (BluetoothDataReceiver bluetoothDataReceiver : bluetoothDataReceivers)
             bluetoothDataReceiver.onDataReceived(dataPoint);
-        if (webSocket != null)
+        if (webSocket != null) {
             webSocket.emit("data", dataPoint.toString()); //this happens on a different thread, so low perf overhead
+            Log.d("JSON", dataPoint.toString());
+        }
+
     }
 
     @Override
