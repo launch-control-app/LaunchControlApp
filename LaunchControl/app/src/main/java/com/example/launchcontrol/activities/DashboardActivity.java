@@ -127,6 +127,7 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
             public void onClick(View view) {
                 WebSocketManager.getWebSocket(DashboardActivity.this, false).disconnect();
                 Intent intent = new Intent(DashboardActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 WebSocketManager.getWebSocket(DashboardActivity.this, false).disconnect();
                 SessionManager.getSessionManager(DashboardActivity.this).setAuthenticated(false);
                 bluetoothManager.unRegisterBluetoothConnectionStatusReciever(DashboardActivity.this);
@@ -134,6 +135,7 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
                 bluetoothManager.disconnectFromDevice();
 
                 startActivity(intent);
+                finish();
             }
         });
     }

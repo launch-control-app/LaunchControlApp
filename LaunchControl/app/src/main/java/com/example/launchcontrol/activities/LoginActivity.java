@@ -45,6 +45,9 @@ public class LoginActivity extends AppCompatActivity implements AuthenticationLi
 
     ProgressDialog progressDialog;
 
+//    @Override
+//    public void onBackPressed() {}
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
