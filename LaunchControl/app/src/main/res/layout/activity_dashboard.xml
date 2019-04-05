@@ -21,20 +21,31 @@
         android:background="@color/backgroundNormal"
         tools:context=".activities.DashboardActivity">
 
+        <Button
+            android:id="@+id/DashboardActivity_logout"
+            android:layout_width="35dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="360dp"
+            android:layout_marginTop="16dp"
+            android:alpha="0.7"
+            android:background="@drawable/logout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ProgressBar
-            android:layout_marginTop="150dp"
-            android:layout_width="350dp"
-            android:layout_height="350dp"
             android:id="@+id/DashboardActivity_speedring"
             style="?android:progressBarStyleHorizontal"
-            android:progressDrawable="@drawable/circle"
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:layout_marginTop="150dp"
             android:progress="0"
+            android:progressDrawable="@drawable/circle"
             android:progressTint="@color/primaryText"
             app:layout_constraintBottom_toTopOf="@+id/DashboardActivity_databar"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.18906"/>
+            app:layout_constraintVertical_bias="0.18906" />
 
         <LinearLayout
             android:id="@+id/DashboardActivity_LinearLayoutSpeed"
@@ -47,22 +58,22 @@
             app:layout_constraintTop_toTopOf="@+id/DashboardActivity_speedring">
 
             <TextView
+                android:id="@+id/DashboardActivity_speed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/DashboardActivity_speed"
                 android:text="000"
-                android:textSize="50dp"
-                android:textColor="@color/primaryText" />
+                android:textColor="@color/primaryText"
+                android:textSize="50dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="KPH"
-                android:layout_marginTop="-10dp"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="-10dp"
                 android:fontFamily="@font/poppins_light"
-                android:textSize="20dp"
-                android:textColor="@color/primaryText" />
+                android:text="KPH"
+                android:textColor="@color/primaryText"
+                android:textSize="20dp" />
 
         </LinearLayout>
 
@@ -70,24 +81,24 @@
             android:id="@+id/DashboardActivity_databar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@drawable/floating_data_window"
             android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="150dp"
+            android:background="@drawable/floating_data_window"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="@+id/DashboardActivity_stats"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/DashboardActivity_speedring"
-            android:layout_marginTop="150dp">
+            app:layout_constraintTop_toBottomOf="@+id/DashboardActivity_speedring">
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <LinearLayout
-                android:layout_marginTop="8dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:layout_weight="3"
                 android:orientation="vertical">
 
@@ -95,11 +106,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="Engine RPM"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textColor="@color/primaryText"
                     android:alpha="0.5"
-                    />
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="Engine RPM"
+                    android:textColor="@color/primaryText" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -107,28 +117,27 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/DashboardActivity_rpm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/DashboardActivity_rpm"
-                        android:text="00000"
-                        android:textSize="25dp"
                         android:fontFamily="@font/poppins_light"
+                        android:text="00000"
                         android:textColor="@color/primaryText"
-                        />
+                        android:textSize="25dp" />
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="0dp"
-                        android:text="RPM"
-                        android:textSize="13dp"
                         android:fontFamily="@font/poppins_thin"
+                        android:text="RPM"
                         android:textColor="@color/primaryText"
-                        />
+                        android:textSize="13dp" />
 
                 </LinearLayout>
 
@@ -137,12 +146,12 @@
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <LinearLayout
-                android:layout_marginTop="8dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:layout_weight="2"
                 android:orientation="vertical">
 
@@ -150,11 +159,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="Runtime"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textColor="@color/primaryText"
                     android:alpha="0.5"
-                    />
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="Runtime"
+                    android:textColor="@color/primaryText" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -162,30 +170,28 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/DashboardActivity_runtime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/DashboardActivity_runtime"
-                        android:text="000"
-                        android:textSize="25dp"
                         android:fontFamily="@font/poppins_light"
+                        android:text="000"
                         android:textColor="@color/primaryText"
-                        />
+                        android:textSize="25dp" />
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1" />
 
                     <TextView
                         android:id="@+id/DashboardActivity_runtime_unit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="3dp"
-                        android:text="M"
-                        android:textSize="13dp"
                         android:fontFamily="@font/poppins_thin"
+                        android:text="M"
                         android:textColor="@color/primaryText"
-                        />
+                        android:textSize="13dp" />
 
                 </LinearLayout>
 
@@ -194,24 +200,23 @@
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <LinearLayout
-                android:layout_weight="2"
-                android:layout_marginTop="8dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_weight="2"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="Distance"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textColor="@color/primaryText"
                     android:alpha="0.5"
-                    />
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="Distance"
+                    android:textColor="@color/primaryText" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -219,28 +224,26 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/DashboardActivity_distance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/DashboardActivity_distance"
-                        android:text="000"
-                        android:textSize="25dp"
                         android:fontFamily="@font/poppins_light"
+                        android:text="000"
                         android:textColor="@color/primaryText"
-                        />
+                        android:textSize="25dp" />
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="KM"
-                        android:textSize="13dp"
                         android:fontFamily="@font/poppins_thin"
+                        android:text="KM"
                         android:textColor="@color/primaryText"
-                        />
+                        android:textSize="13dp" />
 
                 </LinearLayout>
 
@@ -249,46 +252,43 @@
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/DashboardActivity_stats"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/DashboardActivity_stats"
-            android:orientation="vertical"
+            android:layout_marginTop="25dp"
             android:background="@color/tertiaryText"
-            app:layout_constraintTop_toBottomOf="@+id/DashboardActivity_databar"
+            android:orientation="vertical"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="25dp"
-            >
+            app:layout_constraintTop_toBottomOf="@+id/DashboardActivity_databar">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginTop="2dp"
-                    android:background="@color/backgroundNormal"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="2dp"
                     android:layout_weight="1"
+                    android:background="@color/backgroundNormal"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:alpha="0.5"
+                        android:fontFamily="@font/poppins_regular"
                         android:text="Fuel Level"
-                        android:fontFamily="@font/poppins_regular"
-                        android:textColor="@color/primaryText"
-                        android:alpha="0.5"
-                        />
+                        android:textColor="@color/primaryText" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -298,60 +298,58 @@
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                         <TextView
-                            android:layout_width="70dp"
-                            android:layout_height="wrap_content"
                             android:id="@+id/DashboardActivity_fuel"
-                            android:text="000"
-                            android:textSize="30dp"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_light"
+                            android:text="000"
                             android:textColor="@color/primaryText"
-                            />
+                            android:textSize="30dp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="0.2"/>
+                            android:layout_weight="0.2" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="0dp"
-                            android:text="%"
-                            android:textSize="17dp"
                             android:fontFamily="@font/poppins_thin"
+                            android:text="%"
                             android:textColor="@color/primaryText"
-                            />
+                            android:textSize="17dp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginTop="2dp"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginRight="2dp"
-                    android:background="@color/backgroundNormal"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginRight="2dp"
                     android:layout_weight="1"
+                    android:background="@color/backgroundNormal"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:alpha="0.5"
+                        android:fontFamily="@font/poppins_regular"
                         android:text="Oil Temperature"
-                        android:fontFamily="@font/poppins_regular"
-                        android:textColor="@color/primaryText"
-                        android:alpha="0.5"
-                        />
+                        android:textColor="@color/primaryText" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -361,36 +359,35 @@
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                         <TextView
-                            android:layout_width="70dp"
-                            android:layout_height="wrap_content"
                             android:id="@+id/DashboardActivity_oiltemp"
-                            android:text="000"
-                            android:textSize="30dp"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_light"
+                            android:text="000"
                             android:textColor="@color/primaryText"
-                            />
+                            android:textSize="30dp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="0.2"/>
+                            android:layout_weight="0.2" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="0dp"
-                            android:text="°C"
-                            android:textSize="17dp"
                             android:fontFamily="@font/poppins_thin"
+                            android:text="°C"
                             android:textColor="@color/primaryText"
-                            />
+                            android:textSize="17dp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                     </LinearLayout>
 
@@ -401,27 +398,25 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginTop="2dp"
-                    android:background="@color/backgroundNormal"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="2dp"
                     android:layout_weight="1"
+                    android:background="@color/backgroundNormal"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:alpha="0.5"
+                        android:fontFamily="@font/poppins_regular"
                         android:text="Calculated Engine Load"
-                        android:fontFamily="@font/poppins_regular"
-                        android:textColor="@color/primaryText"
-                        android:alpha="0.5"
-                        />
+                        android:textColor="@color/primaryText" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -431,60 +426,58 @@
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                         <TextView
-                            android:layout_width="70dp"
-                            android:layout_height="wrap_content"
                             android:id="@+id/DashboardActivity_calcEngineLoad"
-                            android:text="000"
-                            android:textSize="30dp"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_light"
+                            android:text="000"
                             android:textColor="@color/primaryText"
-                            />
+                            android:textSize="30dp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="0.2"/>
+                            android:layout_weight="0.2" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="0dp"
-                            android:text="%"
-                            android:textSize="17dp"
                             android:fontFamily="@font/poppins_thin"
+                            android:text="%"
                             android:textColor="@color/primaryText"
-                            />
+                            android:textSize="17dp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginTop="2dp"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginRight="2dp"
-                    android:background="@color/backgroundNormal"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginRight="2dp"
                     android:layout_weight="1"
+                    android:background="@color/backgroundNormal"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:alpha="0.5"
+                        android:fontFamily="@font/poppins_regular"
                         android:text="Absolute Engine Load"
-                        android:fontFamily="@font/poppins_regular"
-                        android:textColor="@color/primaryText"
-                        android:alpha="0.5"
-                        />
+                        android:textColor="@color/primaryText" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -494,36 +487,35 @@
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                         <TextView
-                            android:layout_width="70dp"
-                            android:layout_height="wrap_content"
                             android:id="@+id/DashboardActivity_absEngineLoad"
-                            android:text="000"
-                            android:textSize="30dp"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_light"
+                            android:text="000"
                             android:textColor="@color/primaryText"
-                            />
+                            android:textSize="30dp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="0.2"/>
+                            android:layout_weight="0.2" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="0dp"
-                            android:text="%"
-                            android:textSize="17dp"
                             android:fontFamily="@font/poppins_thin"
+                            android:text="%"
                             android:textColor="@color/primaryText"
-                            />
+                            android:textSize="17dp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                     </LinearLayout>
 
@@ -534,27 +526,25 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginTop="2dp"
-                    android:background="@color/backgroundNormal"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="2dp"
                     android:layout_weight="1"
+                    android:background="@color/backgroundNormal"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:alpha="0.5"
+                        android:fontFamily="@font/poppins_regular"
                         android:text="Engine Torque Percentage"
-                        android:fontFamily="@font/poppins_regular"
-                        android:textColor="@color/primaryText"
-                        android:alpha="0.5"
-                        />
+                        android:textColor="@color/primaryText" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -564,60 +554,58 @@
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                         <TextView
+                            android:id="@+id/DashboardActivity_engineTorque"
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
-                            android:id="@+id/DashboardActivity_engineTorque"
-                            android:text="000"
-                            android:textSize="30dp"
                             android:fontFamily="@font/poppins_light"
+                            android:text="000"
                             android:textColor="@color/primaryText"
-                            />
+                            android:textSize="30dp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="0.2"/>
+                            android:layout_weight="0.2" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="0dp"
-                            android:text="%"
-                            android:textSize="17dp"
                             android:fontFamily="@font/poppins_thin"
+                            android:text="%"
                             android:textColor="@color/primaryText"
-                            />
+                            android:textSize="17dp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginTop="2dp"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginRight="2dp"
-                    android:background="@color/backgroundNormal"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginRight="2dp"
                     android:layout_weight="1"
+                    android:background="@color/backgroundNormal"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="Coolant Temperature"
-                        android:fontFamily="@font/poppins_regular"
-                        android:textColor="@color/primaryText"
                         android:alpha="0.5"
-                        />
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="Coolant Temperature"
+                        android:textColor="@color/primaryText" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -627,36 +615,35 @@
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                         <TextView
+                            android:id="@+id/DashboardActivity_coolantTemp"
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
-                            android:id="@+id/DashboardActivity_coolantTemp"
-                            android:text="000"
-                            android:textSize="30dp"
                             android:fontFamily="@font/poppins_light"
+                            android:text="000"
                             android:textColor="@color/primaryText"
-                            />
+                            android:textSize="30dp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="0.2"/>
+                            android:layout_weight="0.2" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="0dp"
-                            android:text="°C"
-                            android:textSize="17dp"
                             android:fontFamily="@font/poppins_thin"
+                            android:text="°C"
                             android:textColor="@color/primaryText"
-                            />
+                            android:textSize="17dp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                     </LinearLayout>
 
@@ -667,27 +654,25 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginTop="2dp"
-                    android:background="@color/backgroundNormal"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="2dp"
                     android:layout_weight="1"
+                    android:background="@color/backgroundNormal"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="Engine Reference Torque"
-                        android:fontFamily="@font/poppins_regular"
-                        android:textColor="@color/primaryText"
                         android:alpha="0.5"
-                        />
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="Engine Reference Torque"
+                        android:textColor="@color/primaryText" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -697,60 +682,58 @@
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                         <TextView
+                            android:id="@+id/DashboardActivity_engineRefTorque"
                             android:layout_width="105dp"
                             android:layout_height="wrap_content"
-                            android:id="@+id/DashboardActivity_engineRefTorque"
+                            android:fontFamily="@font/poppins_light"
                             android:text="00000"
-                            android:textSize="30dp"
-                            android:fontFamily="@font/poppins_light"
                             android:textColor="@color/primaryText"
-                            />
+                            android:textSize="30dp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="0.16"/>
+                            android:layout_weight="0.16" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="0dp"
+                            android:fontFamily="@font/poppins_thin"
                             android:text="Nm"
-                            android:textSize="17dp"
-                            android:fontFamily="@font/poppins_thin"
                             android:textColor="@color/primaryText"
-                            />
+                            android:textSize="17dp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginTop="2dp"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginRight="2dp"
-                    android:background="@color/backgroundNormal"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginRight="2dp"
                     android:layout_weight="1"
+                    android:background="@color/backgroundNormal"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:alpha="0.5"
+                        android:fontFamily="@font/poppins_regular"
                         android:text="Intake Temperature"
-                        android:fontFamily="@font/poppins_regular"
-                        android:textColor="@color/primaryText"
-                        android:alpha="0.5"
-                        />
+                        android:textColor="@color/primaryText" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -760,36 +743,35 @@
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                         <TextView
-                            android:layout_width="70dp"
-                            android:layout_height="wrap_content"
                             android:id="@+id/DashboardActivity_intakeTemp"
-                            android:text="000"
-                            android:textSize="30dp"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_light"
+                            android:text="000"
                             android:textColor="@color/primaryText"
-                            />
+                            android:textSize="30dp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="0.2"/>
+                            android:layout_weight="0.2" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="0dp"
+                            android:fontFamily="@font/poppins_thin"
                             android:text="°C"
-                            android:textSize="17dp"
-                            android:fontFamily="@font/poppins_thin"
                             android:textColor="@color/primaryText"
-                            />
+                            android:textSize="17dp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                     </LinearLayout>
 
@@ -800,27 +782,25 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginTop="2dp"
-                    android:background="@color/backgroundNormal"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="2dp"
                     android:layout_weight="1"
+                    android:background="@color/backgroundNormal"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:alpha="0.5"
+                        android:fontFamily="@font/poppins_regular"
                         android:text="Intake Pressure"
-                        android:fontFamily="@font/poppins_regular"
-                        android:textColor="@color/primaryText"
-                        android:alpha="0.5"
-                        />
+                        android:textColor="@color/primaryText" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -830,60 +810,58 @@
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                         <TextView
-                            android:layout_width="70dp"
-                            android:layout_height="wrap_content"
                             android:id="@+id/DashboardActivity_intakePressure"
-                            android:text="000"
-                            android:textSize="30dp"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_light"
+                            android:text="000"
                             android:textColor="@color/primaryText"
-                            />
+                            android:textSize="30dp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="0.2"/>
+                            android:layout_weight="0.2" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="0dp"
-                            android:text="kPa"
-                            android:textSize="17dp"
                             android:fontFamily="@font/poppins_thin"
+                            android:text="kPa"
                             android:textColor="@color/primaryText"
-                            />
+                            android:textSize="17dp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginTop="2dp"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginRight="2dp"
-                    android:background="@color/backgroundNormal"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginRight="2dp"
                     android:layout_weight="1"
+                    android:background="@color/backgroundNormal"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                            android:text="Barometric Pressure"
-                        android:fontFamily="@font/poppins_regular"
-                        android:textColor="@color/primaryText"
                         android:alpha="0.5"
-                        />
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="Barometric Pressure"
+                        android:textColor="@color/primaryText" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -893,36 +871,35 @@
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                         <TextView
-                            android:layout_width="70dp"
-                            android:layout_height="wrap_content"
                             android:id="@+id/DashboardActivity_baroPressure"
-                            android:text="000"
-                            android:textSize="30dp"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_light"
+                            android:text="000"
                             android:textColor="@color/primaryText"
-                            />
+                            android:textSize="30dp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="0.2"/>
+                            android:layout_weight="0.2" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="0dp"
+                            android:fontFamily="@font/poppins_thin"
                             android:text="kPa"
-                            android:textSize="17dp"
-                            android:fontFamily="@font/poppins_thin"
                             android:textColor="@color/primaryText"
-                            />
+                            android:textSize="17dp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                     </LinearLayout>
 
@@ -933,27 +910,25 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginTop="2dp"
-                    android:background="@color/backgroundNormal"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="2dp"
                     android:layout_weight="1"
+                    android:background="@color/backgroundNormal"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:alpha="0.5"
+                        android:fontFamily="@font/poppins_regular"
                         android:text="MAF Flow Pressure"
-                        android:fontFamily="@font/poppins_regular"
-                        android:textColor="@color/primaryText"
-                        android:alpha="0.5"
-                        />
+                        android:textColor="@color/primaryText" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -963,60 +938,58 @@
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                         <TextView
+                            android:id="@+id/DashboardActivity_mafPressure"
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
-                            android:id="@+id/DashboardActivity_mafPressure"
-                            android:text="000"
-                            android:textSize="30dp"
                             android:fontFamily="@font/poppins_light"
+                            android:text="000"
                             android:textColor="@color/primaryText"
-                            />
+                            android:textSize="30dp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="0.2"/>
+                            android:layout_weight="0.2" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="0dp"
-                            android:text="g/s"
-                            android:textSize="17dp"
                             android:fontFamily="@font/poppins_thin"
+                            android:text="g/s"
                             android:textColor="@color/primaryText"
-                            />
+                            android:textSize="17dp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginTop="2dp"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginRight="2dp"
-                    android:background="@color/backgroundNormal"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginRight="2dp"
                     android:layout_weight="1"
+                    android:background="@color/backgroundNormal"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="Throttle Position"
-                        android:fontFamily="@font/poppins_regular"
-                        android:textColor="@color/primaryText"
                         android:alpha="0.5"
-                        />
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="Throttle Position"
+                        android:textColor="@color/primaryText" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -1026,36 +999,35 @@
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                         <TextView
+                            android:id="@+id/DashboardActivity_throttlePosition"
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
-                            android:id="@+id/DashboardActivity_throttlePosition"
-                            android:text="000"
-                            android:textSize="30dp"
                             android:fontFamily="@font/poppins_light"
+                            android:text="000"
                             android:textColor="@color/primaryText"
-                            />
+                            android:textSize="30dp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="0.2"/>
+                            android:layout_weight="0.2" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="0dp"
-                            android:text="%"
-                            android:textSize="17dp"
                             android:fontFamily="@font/poppins_thin"
+                            android:text="%"
                             android:textColor="@color/primaryText"
-                            />
+                            android:textSize="17dp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                     </LinearLayout>
 
@@ -1066,28 +1038,26 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="2dp"
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="2dp"
-                    android:background="@color/backgroundNormal"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@color/backgroundNormal"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="Control Module Voltage"
-                        android:fontFamily="@font/poppins_regular"
-                        android:textColor="@color/primaryText"
                         android:alpha="0.5"
-                        />
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="Control Module Voltage"
+                        android:textColor="@color/primaryText" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -1097,58 +1067,56 @@
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                         <TextView
+                            android:id="@+id/DashboardActivity_controlVoltage"
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
-                            android:id="@+id/DashboardActivity_controlVoltage"
-                            android:text="00.0"
-                            android:textSize="30dp"
                             android:fontFamily="@font/poppins_light"
+                            android:text="00.0"
                             android:textColor="@color/primaryText"
-                            />
+                            android:textSize="30dp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="0.2"/>
+                            android:layout_weight="0.2" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="0dp"
-                            android:text="V"
-                            android:textSize="17dp"
                             android:fontFamily="@font/poppins_thin"
+                            android:text="V"
                             android:textColor="@color/primaryText"
-                            />
+                            android:textSize="17dp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_margin="2dp"
-                    android:background="@color/backgroundNormal"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
                     android:layout_weight="1"
+                    android:background="@color/backgroundNormal"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="Ambient Temperature"
-                        android:fontFamily="@font/poppins_regular"
-                        android:textColor="@color/primaryText"
                         android:alpha="0.5"
-                        />
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="Ambient Temperature"
+                        android:textColor="@color/primaryText" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -1158,36 +1126,35 @@
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                         <TextView
+                            android:id="@+id/DashboardActivity_ambtemp"
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
-                            android:id="@+id/DashboardActivity_ambtemp"
-                            android:text="000"
-                            android:textSize="30dp"
                             android:fontFamily="@font/poppins_light"
+                            android:text="000"
                             android:textColor="@color/primaryText"
-                            />
+                            android:textSize="30dp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="0.2"/>
+                            android:layout_weight="0.2" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="0dp"
-                            android:text="°C"
-                            android:textSize="17dp"
                             android:fontFamily="@font/poppins_thin"
+                            android:text="°C"
                             android:textColor="@color/primaryText"
-                            />
+                            android:textSize="17dp" />
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                     </LinearLayout>
 
@@ -1198,13 +1165,14 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/DashboardActivity_stats"
+            android:layout_marginTop="25dp"
+            android:orientation="vertical"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:orientation="vertical"
-            android:layout_marginTop="25dp">
+            app:layout_constraintTop_toBottomOf="@+id/DashboardActivity_stats">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -1215,34 +1183,34 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Speed"
                     android:fontFamily="@font/poppins_light"
-                    android:textSize="25dp"
-                    android:textColor="@color/primaryText"/>
-                
+                    android:text="Speed"
+                    android:textColor="@color/primaryText"
+                    android:textSize="25dp" />
+
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
 
                 <TextView
+                    android:id="@+id/DashboardActivity_graphSpeed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/DashboardActivity_graphSpeed"
                     android:layout_marginLeft="8dp"
-                    android:text="000 KPH"
                     android:fontFamily="@font/poppins_light"
-                    android:textSize="25dp"
-                    android:textColor="@color/primaryText"/>
+                    android:text="000 KPH"
+                    android:textColor="@color/primaryText"
+                    android:textSize="25dp" />
 
             </LinearLayout>
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/DashboardActivity_speedchart"
-                android:layout_marginHorizontal="12dp"
-                android:layout_marginBottom="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"/>
+                android:layout_height="400dp"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginBottom="20dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -1253,42 +1221,42 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="RPM"
                     android:fontFamily="@font/poppins_light"
-                    android:textSize="25dp"
-                    android:textColor="@color/primaryText"/>
+                    android:text="RPM"
+                    android:textColor="@color/primaryText"
+                    android:textSize="25dp" />
 
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
 
                 <TextView
+                    android:id="@+id/DashboardActivity_graphRPM"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/DashboardActivity_graphRPM"
                     android:layout_marginLeft="8dp"
-                    android:text="00000 RPM"
                     android:fontFamily="@font/poppins_light"
-                    android:textSize="25dp"
-                    android:textColor="@color/primaryText"/>
+                    android:text="00000 RPM"
+                    android:textColor="@color/primaryText"
+                    android:textSize="25dp" />
 
             </LinearLayout>
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/DashboardActivity_rpmchart"
-                android:layout_marginHorizontal="12dp"
-                android:layout_marginBottom="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"/>
+                android:layout_height="400dp"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginBottom="20dp" />
 
             <fragment
                 android:id="@+id/DashboardActivity_map"
                 android:name="com.example.launchcontrol.fragments.WorkaroundMapFragment"
                 android:layout_width="match_parent"
-                android:layout_marginTop="20dp"
                 android:layout_height="600dp"
-                tools:context="com.example.launchcontrol.activities.DashboardActivity"/>
+                android:layout_marginTop="20dp"
+                tools:context="com.example.launchcontrol.activities.DashboardActivity" />
 
         </LinearLayout>
 

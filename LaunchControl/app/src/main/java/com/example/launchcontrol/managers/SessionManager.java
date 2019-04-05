@@ -29,6 +29,11 @@ public class SessionManager implements Session {
 
     private List<AuthenticationListener> authenticationListenerList;
 
+    public static void logout(Context context) {
+        // TODO
+
+    }
+
     public static SessionManager getSessionManager(Context context)
     {
         if (sessionManager == null)

@@ -8,11 +8,14 @@ package com.example.launchcontrol.activities;
 
 import android.Manifest;
 import android.bluetooth.BluetoothDevice;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -48,6 +51,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 public class DashboardActivity extends AppCompatActivity implements BluetoothDataReceiver, BluetoothConnectionStatusReceiver,
         OnMapReadyCallback {
 
+    Button logout;
     TextView speed, rpm, runtime, runtimeUnit ,distance, fuel, oiltemp,
         calcEngineLoad, absEngineLoad, engineTorquePercentage, coolanttemp,
         engineRefTorque, intaketemp, intakePressure, baroPressure, mafPressure,
@@ -116,6 +120,22 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
         bluetoothManager.registerBluetoothDataReceiver(this);
         bluetoothManager.registerBluetoothConnectionStatusReciever(this);
         bluetoothManager.setWebSocket(WebSocketManager.getWebSocket(this, false));
+
+        logout = findViewById(R.id.DashboardActivity_logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                WebSocketManager.getWebSocket(DashboardActivity.this, false).disconnect();
+                Intent intent = new Intent(DashboardActivity.this, LoginActivity.class);
+                WebSocketManager.getWebSocket(DashboardActivity.this, false).disconnect();
+                SessionManager.getSessionManager(DashboardActivity.this).setAuthenticated(false);
+                bluetoothManager.unRegisterBluetoothConnectionStatusReciever(DashboardActivity.this);
+                bluetoothManager.unRegisterBluetoothDataReciever(DashboardActivity.this);
+                bluetoothManager.disconnectFromDevice();
+
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
