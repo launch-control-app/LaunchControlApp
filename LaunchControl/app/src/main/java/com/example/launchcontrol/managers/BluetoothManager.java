@@ -49,8 +49,8 @@ public class BluetoothManager implements DeviceCallback, LocationListener {
     private List<BluetoothDataReceiver> bluetoothDataReceivers;
     private List<BluetoothConnectionStatusReceiver> bluetoothConnectionStatusReceivers;
 
-    //private String deviceName = "DESKTOP-B4D2HN2";
-    private String deviceName = "HC-05";
+    private String deviceName = "DESKTOP-B4D2HN2";
+    //private String deviceName = "HC-05";
     private Socket webSocket;
 
     private Context context;

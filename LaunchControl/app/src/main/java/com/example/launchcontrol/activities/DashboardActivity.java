@@ -9,8 +9,10 @@ package com.example.launchcontrol.activities;
 import android.Manifest;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -30,7 +32,10 @@ import com.example.launchcontrol.managers.BluetoothManager;
 import com.example.launchcontrol.managers.SessionManager;
 import com.example.launchcontrol.managers.WebSocketManager;
 import com.example.launchcontrol.models.DataPoint;
+import com.example.launchcontrol.models.Token;
 import com.example.launchcontrol.utilities.ChartMaker;
+import com.example.launchcontrol.utilities.LoginUtil;
+import com.example.launchcontrol.utilities.NetworkStateReceiver;
 import com.example.launchcontrol.utilities.PermsUtil;
 import com.example.launchcontrol.utilities.SnackbarMaker;
 import com.example.launchcontrol.utilities.RequestCodes;
@@ -48,8 +53,12 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class DashboardActivity extends AppCompatActivity implements BluetoothDataReceiver, BluetoothConnectionStatusReceiver,
-        OnMapReadyCallback {
+        OnMapReadyCallback, NetworkStateReceiver.NetworkStateReceiverListener {
 
     Button logout;
     TextView speed, rpm, runtime, runtimeUnit ,distance, fuel, oiltemp,
@@ -64,6 +73,7 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
     FusedLocationProviderClient mFusedLocationClient;
     Location currentLocation;
     LineChart speedChart, rpmChart;
+    NetworkStateReceiver networkStateReceiver;
     int time = 0;
 
     @Override
@@ -138,6 +148,9 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
                 finish();
             }
         });
+
+        networkStateReceiver = new NetworkStateReceiver();
+        networkStateReceiver.addListener(this);
     }
 
     @Override
@@ -291,5 +304,50 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
         bluetoothManager.unRegisterBluetoothDataReciever(this);
         bluetoothManager.disconnectFromDevice();
         finish();
+    }
+
+    public void networkAvailable() {
+
+        SnackbarMaker.MakeCustomSnackbar(scrollView,"Reconnected to the internet!");
+
+        LoginUtil.getLaunchControlService().loginAccount(SessionManager.getSessionManager(this).getEmail(),
+                SessionManager.getSessionManager(this).getPassword()).enqueue(new Callback<Token>() {
+            @Override
+            public void onResponse(Call<Token> call, Response<Token> response) {
+                if (response.body() == null)
+                {
+                    SnackbarMaker.MakeCustomSnackbar(scrollView, "Something went wrong with logging in!");
+                    return;
+                }
+                DashboardActivity.this.processToken(response.body().getToken());
+            }
+
+            @Override
+            public void onFailure(Call<Token> call, Throwable t) {
+                SnackbarMaker.MakeCustomSnackbar(scrollView, "Something went wrong with the server! Please try again later.");
+            }
+        });
+    }
+
+    private void processToken(String token) {
+        SessionManager.getSessionManager(this).saveToken(token);
+        WebSocketManager.getWebSocket(this, true);
+    }
+
+    @Override
+    public void networkUnavailable() {
+        SnackbarMaker.MakeCustomSnackbar(scrollView,"Internet disconnected, no longer transmitting to web!");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.registerReceiver(networkStateReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        this.unregisterReceiver(networkStateReceiver);
     }
 }
