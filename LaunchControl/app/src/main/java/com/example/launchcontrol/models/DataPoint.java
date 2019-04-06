@@ -175,6 +175,7 @@ public class DataPoint {
         {
             fuelLevel = Integer.parseInt(parameters[18]);
         } catch (Exception e) {}
+
     }
 
     public String getVIN()
@@ -276,6 +277,7 @@ public class DataPoint {
     {
         if (latLng == null && location != null)
             latLng = new LatLng(location.getLatitude(), location.getLongitude());
+
     }
 
     public LatLng getLatLng()
