@@ -153,25 +153,25 @@ public class DashboardActivity extends AppCompatActivity implements BluetoothDat
                 speedRing.startAnimation(progressBarAnimation);
 
                 //speed.setText(String.format("%03d", dataPoint.getVehicleSpeed()));
-                rpm.setText(String.format("%05d", dataPoint.getEngineRPM()));
-                runtime.setText(String.format("%03d", dataPoint.getEngineRunningTime()));
-                distance.setText(String.format("%03d", dataPoint.getVehicleRunningDistance()));
-                fuel.setText(String.format("%03d", dataPoint.getFuelLevel()));
-                oiltemp.setText(String.format("%03d", dataPoint.getEngineOilTemperature()));
-                calcEngineLoad.setText(String.format("%03d", dataPoint.getCalculatedEngineLoad()));
-                absEngineLoad.setText(String.format("%03d", dataPoint.getAbsoluteEngineLoad()));
-                engineTorquePercentage.setText(String.format("%03d", dataPoint.getTorquePercentage()));
-                coolanttemp.setText(String.format("%03d", dataPoint.getEngineCoolantTemperature()));
-                engineRefTorque.setText(String.format("%05d", dataPoint.getReferenceTorque()));
-                intaketemp.setText(String.format("%03d", dataPoint.getIntakeTemperature()));
-                intakePressure.setText(String.format("%03d", dataPoint.getIntakePressure()));
-                baroPressure.setText(String.format("%03d", dataPoint.getBarometricPressure()));
-                mafPressure.setText(String.format("%03d", dataPoint.getFlowPressure()));
-                throttlePos.setText(String.format("%03d", dataPoint.getThrottlePosition()));
-                ctrlVoltage.setText(String.format("%03d", dataPoint.getControlModuleVoltage()));
-                ambitemp.setText(String.format("%03d", dataPoint.getAmbientTemperature()));
-                graphspeed.setText(String.format("%03d KPH", dataPoint.getVehicleSpeed()));
-                graphrpm.setText(String.format("%05d RPM", dataPoint.getEngineRPM()));
+                rpm.setText((dataPoint.getEngineRPM() == -999) ? "-" : (String.format("%05d", dataPoint.getEngineRPM())));
+                runtime.setText((dataPoint.getEngineRunningTime() == -999) ? "-" : String.format("%03d", dataPoint.getEngineRunningTime()));
+                distance.setText((dataPoint.getVehicleRunningDistance() == -999) ? "-" : String.format("%03d", dataPoint.getVehicleRunningDistance()));
+                fuel.setText((dataPoint.getFuelLevel() == -999) ? "-" : String.format("%03d", dataPoint.getFuelLevel()));
+                oiltemp.setText((dataPoint.getEngineOilTemperature() == -999) ? "-" : String.format("%03d", dataPoint.getEngineOilTemperature()));
+                calcEngineLoad.setText((dataPoint.getCalculatedEngineLoad() == -999) ? "-" : String.format("%03d", dataPoint.getCalculatedEngineLoad()));
+                absEngineLoad.setText((dataPoint.getAbsoluteEngineLoad() == -999) ? "-" : String.format("%03d", dataPoint.getAbsoluteEngineLoad()));
+                engineTorquePercentage.setText((dataPoint.getTorquePercentage() == -999) ? "-" : String.format("%03d", dataPoint.getTorquePercentage()));
+                coolanttemp.setText((dataPoint.getEngineCoolantTemperature() == -999) ? "-" : String.format("%03d", dataPoint.getEngineCoolantTemperature()));
+                engineRefTorque.setText((dataPoint.getReferenceTorque() == -999) ? "-" : String.format("%05d", dataPoint.getReferenceTorque()));
+                intaketemp.setText((dataPoint.getIntakeTemperature() == -999) ? "-" : String.format("%03d", dataPoint.getIntakeTemperature()));
+                intakePressure.setText((dataPoint.getIntakePressure() == -999) ? "-" : String.format("%03d", dataPoint.getIntakePressure()));
+                baroPressure.setText((dataPoint.getBarometricPressure() == -999) ? "-" : String.format("%03d", dataPoint.getBarometricPressure()));
+                mafPressure.setText((dataPoint.getFlowPressure() == -999) ? "-" : String.format("%03d", dataPoint.getFlowPressure()));
+                throttlePos.setText((dataPoint.getThrottlePosition() == -999) ? "-" : String.format("%03d", dataPoint.getThrottlePosition()));
+                ctrlVoltage.setText((dataPoint.getControlModuleVoltage() == -999) ? "-" : String.format("%03d", dataPoint.getControlModuleVoltage()));
+                ambitemp.setText((dataPoint.getAmbientTemperature() == -999) ? "-" : String.format("%03d", dataPoint.getAmbientTemperature()));
+                graphspeed.setText((dataPoint.getVehicleSpeed() == -999) ? "-" : String.format("%03d KPH", dataPoint.getVehicleSpeed()));
+                graphrpm.setText((dataPoint.getEngineRPM() == -999) ? "-" : String.format("%05d RPM", dataPoint.getEngineRPM()));
 
                 try
                 {
