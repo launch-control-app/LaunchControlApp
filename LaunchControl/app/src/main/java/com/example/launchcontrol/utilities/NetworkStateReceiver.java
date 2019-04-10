@@ -1,3 +1,12 @@
+/**
+ * Creation Date: Saturday, April 6th 2019
+ * Original Author: Rohan Rao
+ * Contents of File: Listens to network changes to implement automatic reconnection to
+ * web server
+ * ADAPTED FROM OUR CMPUT 301 PROJECT:
+ * https://github.com/CMPUT301F17T26/Smores/blob/master/app/src/main/java/cmput301f17t26/smores/utils/NetworkStateReceiver.java
+ */
+
 package com.example.launchcontrol.utilities;
 
 import android.content.BroadcastReceiver;
@@ -9,11 +18,6 @@ import android.net.NetworkInfo;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by Rohan on 11/14/2017.
- * The SOURCE for this file is from our CMPUT 301 Project:
- * https://github.com/CMPUT301F17T26/Smores/blob/master/app/src/main/java/cmput301f17t26/smores/utils/NetworkStateReceiver.java
- */
 
 public class NetworkStateReceiver extends BroadcastReceiver {
 

@@ -1,3 +1,9 @@
+/**
+ * Creation Date: Friday, February 1st 2019
+ * Original Author: Rohan Rao
+ * Contents of File: Implements a session to save username/password as well as login/logout behaviour
+ */
+
 package com.example.launchcontrol.managers;
 
 import android.content.Context;
